@@ -1,0 +1,657 @@
+/*
+filename: style.css
+authors: Juliette Grove, Ada Yong, Andrea McPadden, Alisla Foley
+created: 27/08/2026
+last modified: 09/09/2026
+description: Stylesheet used for HTML files index.html, jobs.html, apply.html, and about.html.
+*/
+
+
+/* Global Styling Section */
+/* e.g. font styling, sizing, background color, etc. anything that we want to be consistent across all pages! */
+/* feel free to change the font btw i just chose a basic one -Alis*/
+
+body {
+    font-family: "Play", sans-serif;
+    /* gets rid of the ugly gap between the webpage content and the edge of the browser */
+    margin: 0;
+
+    /* below is for making the footer stay at the bottom of the page, */
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;   
+}
+
+/* Screen reader only content */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  white-space: nowrap
+}
+
+/* makes sure that the main section takes up all of the space it can. */
+main {
+    flex: 1;
+}
+
+.section-left, .section-right {
+    flex: 1;
+    padding: 20px;
+}
+
+.section-left {
+    border-radius: 14px;
+    align-self: flex-start;
+    background-color: white;
+    margin: 1vw;
+
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px;
+}
+
+.section-right {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+.section-right img {
+    border-radius: 14px;
+    max-width: 100%;
+    height: auto;
+
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px;
+}
+.section-right table {
+    border-collapse: collapse;
+    margin: auto;
+    background-color: white;
+
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px;
+}
+.section-right th {
+    background-color: rgb(235, 246, 173);
+}
+.section-right th, td, tr{
+    border: 2px solid rgba(0, 0, 0, 0.5);
+    border-collapse: collapse;
+    text-align: center;
+    padding: 0.2rem 0.4rem;
+
+    font-size: clamp(0.5rem, 1.5vw, 1rem);
+}
+.section-right .tools-table-header {
+    background-color: #b7de85;
+}
+
+
+/* Header Section */
+/* global across all pages, e.g. navigation bar, logo, title */
+
+/* Navigation bar styling*/
+nav {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1; /* was being hidden behind the hero image */
+
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 10px 20px, rgba(0, 0, 0, 0.2) 0px 6px 6px;
+    background-color: rgba(255, 255, 255, 1);
+}
+
+nav ul {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+    margin: 50px;
+}
+nav ul a {
+    display: inline-block;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    vertical-align: middle;
+    border-radius: 30px;
+    padding: 0.5rem 1rem;
+    font-size: clamp(0.75rem, 4vw, 1.25rem);
+
+    transition: all 0.25s ease;
+}
+nav ul a:hover {
+    transform: scale(1.1);
+    color: white;
+    text-decoration: underline;
+
+    /* capsule around the text when hovered */
+    background-color: #77a737;
+}
+
+/* Company logo and text inside navigation bar */
+.brand {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+    transition: 0.25s ease;
+}
+.brand img {
+    width: clamp(80px, 15vw, 200px);
+    height: auto;
+    filter: drop-shadow(3px 3px 4px rgba(0, 0, 0, 0.8));
+}
+.brand:hover{
+    transform: scale(1.05);
+}
+
+.brand-text {
+    font-family: "Unica One", sans-serif;
+}
+.brand-text h1 {
+    margin: 0;
+    font-size: clamp(1.5rem, 4vw, 3rem);
+}
+
+
+/* Hamburger styling */
+#menu-toggle, .hamburger {
+    display: none;
+}
+
+/* Footer Section */
+/* global across all pages, e.g. the hyperlink styling */
+
+#navFooter {
+    justify-content: center;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.5);
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.2)  0%, white 40%, white 60%, rgba(255, 255, 255, 0.2) 100%);
+}
+
+
+
+/* index.html Section */
+/* Home page only styling, e.g. special styling for acknowledgement of country*/
+
+#index-main {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0px;
+}
+
+.index-container {
+    display: grid;
+    gap: 1rem;
+    margin: 2rem;
+}
+
+.index-section {
+    width:100%;
+    min-height: 10vh;
+    padding: 1vw;
+    margin: 1vw 0;
+
+    display: grid;
+    align-items: center;
+
+    border-radius: 14px;
+    box-sizing: border-box;
+
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 10px 20px, rgba(0, 0, 0, 0.2) 0px 6px 6px;
+    background-color: rgba(255, 255, 255, 1);
+}
+.index-section h3 {
+    text-align: left;
+    font-size: clamp(0.6rem, 3vw, 2rem);
+}
+.index-section p {
+    font-size: clamp(0.6rem, 2vw, 1.5rem); 
+}
+
+.hero-image {
+    /* Stock photo from: https://unsplash.com/photos/mother-and-child-running-on-beach-at-sunset--46JdCBSpDI */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1)), url("../images/index/hero-image.jpg");
+
+    min-height: 100vh;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+.hero-text {
+    text-align: center;
+    font-size: clamp(2rem, 3vw, 3rem);
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+}
+.hero-text a {
+    display: inline-block;
+    text-decoration: none;
+    color: black;
+    background-color: white;
+
+    font-weight: bold;
+    vertical-align: middle;
+    border-radius: 10px;
+    padding: 0.5rem 1rem;
+    font-size: clamp(0.75rem, 4vw, 1.25rem);
+
+    transition: all 0.25s ease;
+}
+.hero-text a:hover {
+    transform: scale(1.1);
+    color: white;
+    text-decoration: underline;
+
+    /* capsule around the text when hovered */
+    background-color: #77a737;
+}
+.hero-text h2 {
+    text-shadow: 4px 4px 4px black;
+}
+.hero-text h3 {
+    padding-top: 10vh;
+    text-shadow: 2px 2px 4px black;
+    font-size: clamp(0.2rem, 3vw, 2rem);
+}
+
+.hover-icon {
+    display: inline-grid;
+    place-items: center;
+    min-width: 4ch;
+    cursor: default;
+}
+.hover-icon .icon, .hover-icon .word { /* Found a cool text shimmer effect from this website: https://edwardsturm.com/articles/how-to-make-animated-shiny-text-with-css/#here */
+    grid-area: 1/1;
+    text-shadow: none; /* the shadow was making a weird effect? */
+    transition: all 0.25s ease;
+}
+.hover-icon .word {
+    -webkit-text-stroke: 0;
+    background: linear-gradient(135deg, #ffffff, #77a737, #ffffff, #77a737);
+    background-size: 400%;
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+
+    animation: text-gradient 3s linear infinite;
+}
+.hover-icon .icon { /* the icons wouldn't take the effect above so used color change instead */
+    opacity: 0;
+    transform: scale(0.7);
+
+    animation: icon-color 3s linear infinite;
+}
+.hover-icon:hover .word {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.7);
+}
+.hover-icon:hover .icon {
+    opacity: 1;
+    transform: translateY(-6px) scale(1);
+}
+@keyframes text-gradient {
+    0% {
+        background-position: 100% 50%;
+    }
+    30% {
+        background-position: 0% 50%;
+    }
+    70% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+@keyframes icon-color {
+    0% {
+        color: #ffffff;
+    }
+    33% {
+        color: #77a737;
+    }
+    66% {
+        color: #77a737;
+    }
+    100% {
+        color: #ffffff;
+    }
+}
+
+#description-section {
+    display: flex;
+
+    background-image: url('../images/index/finance_pattern_background.jpg');
+    background-size: auto;
+    background-attachment: fixed; /* really cool static background effect */
+}
+
+#customer-satisfaction-section {
+    display: flex;
+
+    background-image: url('../images/index/finance_pattern_background.jpg');
+    background-size: auto;
+    background-attachment: fixed;
+}
+
+#inclusivity-section {
+    display: flex;
+
+    background-image: url('../images/index/finance_pattern_background.jpg');
+    background-size: auto;
+    background-attachment: fixed;
+}
+
+
+
+/* jobs.html Section */
+/* Jobs description page only styling, e.g. formatting the job descriptions */
+
+main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .intro-section {
+            background-color: #ffffff; 
+            border: 1px solid #dcdcdc; 
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .job-directory {
+            margin-top: 15px;
+            padding: 15px 20px;
+            background-color: #f4fbfd; 
+            border-left: 4px solid #70b8c4; 
+            border-radius: 4px;
+        }
+
+        .job-directory ul {
+            margin: 10px 0 0 0;
+            padding-left: 20px;
+        }
+
+        .job-directory li,
+        .job-directory a {
+            color: #000000; 
+            text-decoration: none;
+            font-weight: bold; /* Note: Changed font-width to font-weight */
+        }
+
+        .job-directory a:hover {
+            text-decoration: underline;
+        }
+
+        /* Fixed typo from .perks-sidepar to .perks-sidebar */
+        .perks-sidebar {
+            background-color: #ffffff; /* White Background */
+            border: 1px dashed #70b8c4; /* Dashed border for visual distinction */
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px; /* Reduced from 35px since it's now inside the main box */
+            margin-top: 20px;
+        }
+
+        .job-card {
+            background-color: #ffffff; /* White background for the job card */
+            border: 2px solid #e0e0e0; /* Light gray border for subtle separation */
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);  /* Soft shadow for depth */
+            transition: transform 0.2s ease, box-shadow 0.2s ease; 
+        }
+
+        .job-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1); /* Slightly stronger shadow on hover for emphasis */
+        }
+
+        .job-card > header {
+            background-color: #f8fafb; /* Light background for the header */
+            padding: 15px 20px;
+            margin: -30px -30px 20px -30px;
+            border-bottom: 2px solid #bee1e6; /* Subtle border to separate header from content */
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        .job-card h3 {
+            margin-top: 0;
+            color: #1a365d; /* Dark blue for the job title */
+            font-size: 1.5em;
+        }
+
+        .job-card section {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #f0f0f0; /* Light border to separate sections */
+        }
+
+        .job-card .apply-link-container {
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0; /* Light border to separate the apply link */
+        }
+
+        .apply-btn {
+            display: inline-block;
+            background-color: #3182ce; /* Blue background for the apply button */
+            color: #ffffff; /* White text for contrast */
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.2s ease;
+        }
+
+        .apply-btn:hover {
+            background-color: #2b6cb0; /* Darker blue on hover for feedback */
+        }
+
+/* apply.html Section */
+/* Application page only styling, e.g. styling of the form */
+
+/* Main form container */
+#job-form {
+    margin: 2rem auto;
+    max-width: 850px;
+    padding: 1.75rem;
+    border-radius: 15px;
+    background-color: white;
+}
+
+/* Form sections */
+#job-form fieldset {
+    border: none;
+    border-top: 1px solid lightgray;
+    margin: 1.5rem;
+}
+
+/* Form headings */
+#job-form legend {
+    font-weight: bold;
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+}
+
+/* Labels and form inputs */
+#job-form label {
+    font-weight: bold;
+}
+
+#job-form input, #job-form select, #job-form textarea {
+    padding: 0.75rem;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    box-sizing: border-box;
+    resize: vertical;
+}
+
+.radio-checkbox {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    margin-bottom: 2rem;
+}
+
+
+#job-form .radio-checkbox label {
+    font-weight: normal;
+}
+
+/* Green focus effect */
+#job-form input:focus,
+#job-form select:focus,
+#job-form textarea:focus {
+    outline: none;
+    border-color: #577331;
+}
+
+#job-form .radio-checkbox input[type="radio"],
+#job-form .radio-checkbox input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+    accent-color:#577331;
+}
+
+/* Form row layouts */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    box-sizing: border-box;
+}
+
+.form-row-three {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 3rem;
+    box-sizing: border-box;
+}
+
+/* Form buttons */
+#job-form input[type="submit"], 
+#job-form input[type="reset"] {
+    font-weight: bold;
+    width: 10rem;
+    height: 3rem;
+    margin: 0.5rem
+}
+
+#job-form input[type="submit"] {
+    background-color: #046007;
+    color:white;
+}
+ 
+#job-form input[type="submit"]:hover {
+    background-color: #033604;
+}
+
+#job-form input[type="reset"] {
+    background-color: #d8d9d7;
+}
+
+ 
+#job-form input[type="reset"]:hover {
+    background-color: #a0a19f;
+}
+
+
+
+/* about.html Section */
+/* About page only styling, e.g. the group photo */
+#about-table {
+    border: 1;
+    border-collapse: collapse;
+    margin: auto;
+    background-color: #FCE3E8; 
+}
+    
+#about-table caption {
+    font-weight: bold;
+    color: black;
+}
+
+
+
+
+/* Media */
+/* For mobile or similar size width tabs */
+@media (max-width: 768px) {
+    .hamburger {
+        display: flex;
+        cursor: pointer;
+        font-size: 2rem;
+        margin-right: 20px;
+        
+        border-radius: 30px;
+        padding: 0.5rem 1rem;
+        transition: all 0.25s ease;
+    }
+
+    .hamburger:hover {
+        transform: scale(1.1);
+        color: white;
+        text-decoration: underline;
+
+        background-color: #77a737;
+    }
+
+    .nav-links {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+
+        top: 100%;
+        left: 0;
+        width: 100%;
+        margin: 0;
+        padding: 1rem 0;
+
+        background-color: rgba(255, 255, 255, 1);
+        text-align: center;
+
+        /* This is for a cool slide down animation!! */
+        max-height: 0; /* starting height */
+        overflow: hidden; /* prevents the links from being visible outside the navigation box while it is animating */
+        opacity: 0;
+        transform: translateY(-10px);
+
+        pointer-events: none; /* stops links from being clicked on while the hamburger is closed/closing */
+
+        transition: max-height 0.4s ease, opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    /* Shows the navigation links when the hamburger menu is opened */
+    #menu-toggle:checked ~ .nav-links {
+        max-height: 400px;
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+
+    #description-section, #customer-satisfaction-section {
+        display: grid;
+    }
+
+     /* Job form fields */
+     .form-row, .form-row-three {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+}
