@@ -1,5 +1,7 @@
 <?php 
-$page_title = "UPDATE COMPANY NAME";
+require_once 'includes/session.inc';
+
+$page_title = "Home";
 include 'includes/header.inc';
 include 'includes/navigation.inc';
 ?>

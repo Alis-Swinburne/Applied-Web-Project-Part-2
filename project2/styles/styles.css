@@ -34,6 +34,9 @@ body {
 /* makes sure that the main section takes up all of the space it can. */
 main {
     flex: 1;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
 .section-left, .section-right {
@@ -94,10 +97,14 @@ nav {
     position: relative;
     align-items: center;
     justify-content: space-between;
-    z-index: 1; /* was being hidden behind the hero image */
+    z-index: 5; /* was being hidden behind the hero image */
 
     box-shadow: rgba(0, 0, 0, 0.2) 0px 10px 20px, rgba(0, 0, 0, 0.2) 0px 6px 6px;
-    background-color: rgba(255, 255, 255, 1);
+    background-color: white;
+}
+
+.main-nav {
+    z-index: 100;
 }
 
 nav ul {
@@ -161,10 +168,33 @@ nav ul a:hover {
 /* Footer Section */
 /* global across all pages, e.g. the hyperlink styling */
 
+footer {
+    z-index: 5;
+}
+
 #navFooter {
+    flex-shrink: 0;
     justify-content: center;
     box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.5);
     background: linear-gradient(to right, rgba(255, 255, 255, 0.2)  0%, white 40%, white 60%, rgba(255, 255, 255, 0.2) 100%);
+    z-index: 5;
+}
+
+#credits {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(to bottom, rgba(70, 70, 70, 0.8) 0%, rgba(70, 70, 70, 0.5) 5%, rgba(70, 70, 70, 0.2) 10%, rgba(70, 70, 70, 0) 15%);
+}
+#credits-heading {
+    text-align: center;
+    font-size: clamp(1rem, 4vw, 2rem);
+}
+#credits ul {
+    list-style: none;
+}
+#credits li {
+    text-align: center;
 }
 
 
@@ -354,12 +384,6 @@ nav ul a:hover {
 
 /* jobs.html Section */
 /* Jobs description page only styling, e.g. formatting the job descriptions */
-
-main {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
-        }
 
         .intro-section {
             background-color: #ffffff; 
@@ -612,6 +636,10 @@ main {
         background-color: #77a737;
     }
 
+    .main-nav, .nav-links {
+        z-index: 101;
+    }
+
     .nav-links {
         display: flex;
         flex-direction: column;
@@ -620,10 +648,11 @@ main {
         top: 100%;
         left: 0;
         width: 100%;
+        box-sizing: border-box;
+
         margin: 0;
         padding: 1rem 0;
-
-        background-color: rgba(255, 255, 255, 1);
+        background-color: white;
         text-align: center;
 
         /* This is for a cool slide down animation!! */
@@ -639,7 +668,8 @@ main {
 
     /* Shows the navigation links when the hamburger menu is opened */
     #menu-toggle:checked ~ .nav-links {
-        max-height: 400px;
+        max-height: 800px;
+        padding: 1rem 0;
         opacity: 1;
         transform: translateY(0);
         pointer-events: auto;

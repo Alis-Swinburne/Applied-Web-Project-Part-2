@@ -1,16 +1,39 @@
 <?php
 
-$current = $nav_current ?? basename($_SERVER['SCRIPT_NAME']); // Keeps a track of the current script/page
+require_once './verify_access.php';
+
+$current = $nav_current ?? basename($_SERVER['SCRIPT_NAME']); // Keeps a track of the current page
 $brand = $site_name ?? "UPDATE COMPANY NAME";
+$logged_in = isset($_SESSION['user_id']);
+$conn = mysqli_connect($host, $db_user, $pwd, $sql_db);
 
-$nav_items = ['index.php => ['HOME', 'fa-house'], 'jobs.php' => ['JOBS', 'fa-suitcase'], 'apply.php' => ['APPLY', 'fa-pen-to-square'], 'about.php' => ['ABOUT', 'fa-circle-info'], ];
+$nav_items = [
+    'index.php' => ['HOME', 'fa-house'], 
+    'jobs.php' => ['JOBS', 'fa-suitcase'], 
+    'apply.php' => ['APPLY', 'fa-pen-to-square'], 
+    'about.php' => ['ABOUT', 'fa-circle-info'], 
+];
 
-// TODO: Add login nav items below when I get to it depending on if the user is logged in
->
+// For determing admin access
+
+// If logged in add the manage nav button and the logout button
+// Else add the login and signup buttons
+if($logged_in) {
+    if(verify_access($conn)) {
+        $nav_items['manage.php'] = ['MANAGE', 'fa-table-list'];
+    }
+
+    $nav_items['logout.php'] = ['LOGOUT', 'fa-right-from-bracket'];
+}
+else { 
+    $nav_items['signup.php'] = ['SIGNUP', 'fa-file-pen'];
+    $nav_items['login.php'] = ['LOGIN', 'fa-right-to-bracket'];
+}
+?>
 
 <header>
             <!-- Contains the company logo, name, and a navigation menu. -->
-            <nav aria-label="Main Navigation">
+            <nav class="main-nav" aria-label="Main Navigation">
                 <a href="index.php" class="brand">
                     <!-- Custom created Logo in Canva (free to use) -->
                     <img src="images/FinTech_logo.png" 

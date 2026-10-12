@@ -5,6 +5,7 @@
 // $page_description = related description
 // $page_keywords = any keywords related to the page
 
+
 // Default site wide settings/variables
 $site_name = "UPDATE COMPANY NAME";
 $site_author = "Juliette Grove, Ada Yong, Andrea McPadden, Alisla Foley";
