@@ -41,14 +41,14 @@ else {
                     loading="lazy">
                     
                     <div class="brand-text">
-                        <span class="brand-name"><?php echo htmlspecialchars($brand); ?></span>
+                        <h2 id="brand-name"><?php echo htmlspecialchars($brand); ?></h2>
                     </div>
                 </a>
 
                 <input type="checkbox" id="menu-toggle">
                 <label for="menu-toggle" class="hamburger" title="hamburger menu">
                     <i class="fa-solid fa-bars" aria-hidden="true"></i>
-                    <span class="hamburger-text">MENU</span>
+                    <span>MENU</span>
                 </label>
 
                 <ul class="nav-links">

@@ -1,13 +1,24 @@
 <?php 
 require_once 'includes/session.inc';
 $is_invalid = false;
+$signup_success = $_SESSION['signup_success'] ?? null;
+unset($_SESSION['signup_success']);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     require_once 'settings.php';
 
     $conn = mysqli_connect($host, $db_user, $pwd, $sql_db);
 
-    $username = trim($_POST['username']);
+    if (!$conn) {
+        exit();
+    }
+
+    require_once 'includes/database_setup.inc';
+
+    mysqli_set_charset($conn, 'utf8mb4');
+
+    $username = trim($_POST['username'] ?? '');
+    $password = $_POST['password'] ?? '';
 
     $stmt = mysqli_prepare($conn, "SELECT id, username, password FROM user WHERE username = ?");
     mysqli_stmt_bind_param($stmt, "s", $username);
@@ -16,12 +27,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $result = mysqli_stmt_get_result($stmt);
     $account = mysqli_fetch_assoc($result);
 
-    if ($account && password_verify($_POST['password'], $account['password'])) {
-        $_SESSION['user_id'] = (int) $account['id'];
-        header("Location: index.php");
+    if ($account && password_verify($password, $account['password'])) {
+        session_regenerate_id(true);
 
+        $_SESSION['user_id'] = (int) $account['id'];
+
+        mysqli_stmt_close($stmt);
+        mysqli_close($conn);
+
+        header("Location: index.php");
         exit();
     }
+
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
 
     $is_invalid = true;
 }
@@ -31,28 +50,35 @@ include 'includes/header.inc';
 include 'includes/navigation.inc';
 ?>
     
-<main id="index-main">
-    <h2>Login</h2>
+<main class="authentication-main">
+    <section class="authentication-popup">
+        <h2>Welcome back!</h2>
+        <p class="authentication-description">Log in to your account to continue</p>
 
-    <?php
-        if ($is_invalid) {
-            echo "<h3>Incorrect username or password.</h3>";
-        }
-    ?>
+        <?php if ($signup_success): ?>
+            <p id="success-message"><em>You have successfully made an account, you can now log in.</em><p>
+        <?php endif; ?>
 
-    <form method="POST" novalidate>
-        <div>
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" value="<?= htmlspecialchars($_POST['username'] ?? "")?>">
-        </div>
+        <?php if ($is_invalid): ?>
+            <p class="error-message"><em>Incorrect username or password.</em></p>
+        <?php endif; ?>
 
-        <div>
-            <label for="password">Password</label>
-            <input type="password" id="passsword" name="password">
-        </div>
+        <form class="authentication-form" method="POST" action="login.php">
+            <div class="form-field">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required maxlength="50" value="<?= htmlspecialchars($_POST['username'] ?? "")?>">
+            </div>
 
-        <button>Login</button>
-    </form>
+            <div class="form-field">
+                <label for="password">Password</label>
+                <input type="password" id="passsword" name="password" required>
+            </div>
+
+            <button class="authentication-button" type="submit">Login</button>
+        </form>
+
+        <p class="authentication-link">Don't have an account? <a href="signup.php">Create an Account</a></p>
+    </section>
 </main>
 
 <?php include 'includes/footer.inc'; ?>
