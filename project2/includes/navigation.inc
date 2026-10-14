@@ -41,7 +41,7 @@ else {
                     loading="lazy">
                     
                     <div class="brand-text">
-                        <h2 id="brand-name"><?php echo htmlspecialchars($brand); ?></h2>
+                        <h2 class="brand-name"><?php echo htmlspecialchars($brand); ?></h2>
                     </div>
                 </a>
 

@@ -11,10 +11,22 @@ description: Stylesheet used for most PHP and HTML files, each file has its own 
 /* e.g. font styling, sizing, background color, etc. anything that we want to be consistent across all pages! */
 /* feel free to change the font btw i just chose a basic one -Alis*/
 
+/* Variables to be used on all pages for consistency */
+:root {
+    --page-bg: white;
+    --text: black;
+    --green: #577331; /* white text passes the accessibility test when on this colour */
+    --green-light: #77a737; /* use this for decorations only, its too light for text (wont pass accessibility tests) */
+    --green-dark: #194803;
+}
+
 body {
     font-family: "Play", sans-serif;
-    /* gets rid of the ugly gap between the webpage content and the edge of the browser */
     margin: 0;
+    background-color: var(--page-bg);
+    color: var(--text);
+    font-size: 1rem;
+    line-height: 1.5;
 
     /* below is for making the footer stay at the bottom of the page, */
     display: flex;
@@ -25,9 +37,20 @@ body {
 /* makes sure that the main section takes up all of the space it can. */
 main {
     flex: 1;
+    width: 100%;
+    box-sizing: border-box;
     max-width: 1000px;
     margin: 0 auto;
     padding: 20px;
+}
+main h1 {
+    font-size: clamp(1.75rem, 5vw, 2.5rem);
+    line-height: 1.2;
+}
+
+button, input, select, textarea {
+    font-family: inherit;
+    font-size: 1rem;
 }
 
 .section-left, .section-right {
@@ -66,16 +89,31 @@ main {
 .section-right th {
     background-color: rgb(235, 246, 173);
 }
-.section-right th, td, tr{
+.section-right th, .section-right td, .section-right tr{
     border: 2px solid rgba(0, 0, 0, 0.5);
-    border-collapse: collapse;
     text-align: center;
     padding: 0.2rem 0.4rem;
-
-    font-size: clamp(0.5rem, 1.5vw, 1rem);
+    font-size: 1rem;
 }
 .section-right .tools-table-header {
     background-color: #b7de85;
+}
+.section-right caption {
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 0.5rem;
+}
+figure.section-right {
+    margin: 0;
+}
+.table-scroll {
+    overflow-x: auto;
+    max-width: 100%;
+}
+
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+    outline: 3px solid var(--green);
+    outline-offset: 2px;
 }
 
 
@@ -93,12 +131,12 @@ nav {
     box-shadow: rgba(0, 0, 0, 0.2) 0px 10px 20px, rgba(0, 0, 0, 0.2) 0px 6px 6px;
     background-color: white;
 }
-
 .main-nav {
     z-index: 100;
 }
 
-#brand-name {
+.brand-name {
+    margin: 0;
     font-size: clamp(1rem, 4vw, 2rem);
 }
 
@@ -129,12 +167,21 @@ nav ul a:hover {
     transform: scale(1.1);
     color: white;
     text-decoration: underline;
+    text-underline-offset: 6px;
 
     /* capsule around the text when hovered */
-    background-color: #77a737;
+    background-color: var(--green);
 }
 nav ul a i {
     flex-shrink: 0;
+}
+.nav-links a[aria-current="page"] {
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 6px;
+
+    color: white;
+    background-color: var(--green-dark);
 }
 
 /* Company logo and text inside navigation bar */
@@ -153,13 +200,8 @@ nav ul a i {
 .brand:hover{
     transform: scale(1.05);
 }
-
 .brand-text {
     font-family: "Unica One", sans-serif;
-}
-.brand-text h1 {
-    margin: 0;
-    font-size: clamp(1.5rem, 4vw, 3rem);
 }
 
 
@@ -187,6 +229,7 @@ footer {
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-top: 3rem;
     background: linear-gradient(to bottom, rgba(70, 70, 70, 0.8) 0%, rgba(70, 70, 70, 0.5) 5%, rgba(70, 70, 70, 0.2) 10%, rgba(70, 70, 70, 0) 15%);
 }
 #credits-heading {
@@ -210,10 +253,8 @@ footer {
     margin: 0 auto;
     padding: 0px;
 }
-
-.index-container {
-    display: grid;
-    gap: 1rem;
+#index-main > .index-section {
+    width: auto;
     margin: 2rem;
 }
 
@@ -232,17 +273,17 @@ footer {
     box-shadow: rgba(0, 0, 0, 0.2) 0px 10px 20px, rgba(0, 0, 0, 0.2) 0px 6px 6px;
     background-color: rgba(255, 255, 255, 1);
 }
-.index-section h3 {
+.index-section h2 {
     text-align: left;
-    font-size: clamp(0.6rem, 3vw, 2rem);
+    font-size: clamp(1.25rem, 3vw, 2rem);
 }
 .index-section p {
-    font-size: clamp(0.6rem, 2vw, 1.5rem); 
+    font-size: clamp(1rem, 2vw, 1.5rem); 
 }
 
 .hero-image {
     /* Stock photo from: https://unsplash.com/photos/mother-and-child-running-on-beach-at-sunset--46JdCBSpDI */
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1)), url("../images/index/hero-image.jpg");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5), var(--page-bg)), url("../images/index/hero-image.jpg");
 
     min-height: 100vh;
 
@@ -253,6 +294,9 @@ footer {
 }
 
 .hero-text {
+    width: min(90%, 42rem);
+    box-sizing: border-box;
+    overflow-wrap: break-word;
     text-align: center;
     font-size: clamp(2rem, 3vw, 3rem);
 
@@ -272,7 +316,7 @@ footer {
     vertical-align: middle;
     border-radius: 10px;
     padding: 0.5rem 1rem;
-    font-size: clamp(0.75rem, 4vw, 1.25rem);
+    font-size: clamp(1rem, 4vw, 1.25rem);
 
     transition: all 0.25s ease;
 }
@@ -282,15 +326,18 @@ footer {
     text-decoration: underline;
 
     /* capsule around the text when hovered */
-    background-color: #77a737;
+    background-color: var(--green);
 }
-.hero-text h2 {
+.hero-text h1 {
+    margin: 0;
+    font-size: clamp(2rem, 6vw, 3.5rem);
     text-shadow: 4px 4px 4px black;
 }
-.hero-text h3 {
+.hero-subtext {
+    margin: 0 0 1rem;
     padding-top: 10vh;
     text-shadow: 2px 2px 4px black;
-    font-size: clamp(0.2rem, 3vw, 2rem);
+    font-size: clamp(1rem, 3vw, 2rem);
 }
 
 .hover-icon {
@@ -359,7 +406,7 @@ footer {
     }
 }
 
-#description-section {
+#description-section, #customer-satisfaction-section, #inclusivity-section {
     display: flex;
 
     background-image: url('../images/index/finance_pattern_background.jpg');
@@ -367,126 +414,110 @@ footer {
     background-attachment: fixed; /* really cool static background effect */
 }
 
-#customer-satisfaction-section {
-    display: flex;
-
-    background-image: url('../images/index/finance_pattern_background.jpg');
-    background-size: auto;
-    background-attachment: fixed;
-}
-
-#inclusivity-section {
-    display: flex;
-
-    background-image: url('../images/index/finance_pattern_background.jpg');
-    background-size: auto;
-    background-attachment: fixed;
-}
-
 
 
 /* jobs.php Section */
 /* Jobs description page only styling, e.g. formatting the job descriptions */
 
-        .intro-section {
-            background-color: #ffffff; 
-            border: 1px solid #dcdcdc; 
-            border-radius: 8px;
-            padding: 24px;
-            margin-bottom: 25px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-        }
+.intro-section {
+    background-color: #ffffff; 
+    border: 1px solid #dcdcdc; 
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
 
-        .job-directory {
-            margin-top: 15px;
-            padding: 15px 20px;
-            background-color: #f4fbfd; 
-            border-left: 4px solid #70b8c4; 
-            border-radius: 4px;
-        }
+.job-directory {
+    margin-top: 15px;
+    padding: 15px 20px;
+    background-color: #f4fbfd; 
+    border-left: 4px solid #70b8c4; 
+    border-radius: 4px;
+}
 
-        .job-directory ul {
-            margin: 10px 0 0 0;
-            padding-left: 20px;
-        }
+.job-directory ul {
+    margin: 10px 0 0 0;
+    padding-left: 20px;
+}
 
-        .job-directory li,
-        .job-directory a {
-            color: #000000; 
-            text-decoration: none;
-            font-weight: bold; /* Note: Changed font-width to font-weight */
-        }
+.job-directory li,
+.job-directory a {
+    color: #000000; 
+    text-decoration: none;
+    font-weight: bold; /* Note: Changed font-width to font-weight */
+}
 
-        .job-directory a:hover {
-            text-decoration: underline;
-        }
+.job-directory a:hover {
+    text-decoration: underline;
+}
 
-        /* Fixed typo from .perks-sidepar to .perks-sidebar */
-        .perks-sidebar {
-            background-color: #ffffff; /* White Background */
-            border: 1px dashed #70b8c4; /* Dashed border for visual distinction */
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 25px; /* Reduced from 35px since it's now inside the main box */
-            margin-top: 20px;
-        }
+/* Fixed typo from .perks-sidepar to .perks-sidebar */
+.perks-sidebar {
+    background-color: #ffffff; /* White Background */
+    border: 1px dashed #70b8c4; /* Dashed border for visual distinction */
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 25px; /* Reduced from 35px since it's now inside the main box */
+    margin-top: 20px;
+}
 
-        .job-card {
-            background-color: #ffffff; /* White background for the job card */
-            border: 2px solid #e0e0e0; /* Light gray border for subtle separation */
-            border-radius: 10px;
-            padding: 30px;
-            margin-bottom: 40px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);  /* Soft shadow for depth */
-            transition: transform 0.2s ease, box-shadow 0.2s ease; 
-        }
+.job-card {
+    background-color: #ffffff; /* White background for the job card */
+    border: 2px solid #e0e0e0; /* Light gray border for subtle separation */
+    border-radius: 10px;
+    padding: 30px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);  /* Soft shadow for depth */
+    transition: transform 0.2s ease, box-shadow 0.2s ease; 
+}
 
-        .job-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1); /* Slightly stronger shadow on hover for emphasis */
-        }
+.job-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1); /* Slightly stronger shadow on hover for emphasis */
+}
 
-        .job-card > header {
-            background-color: #f8fafb; /* Light background for the header */
-            padding: 15px 20px;
-            margin: -30px -30px 20px -30px;
-            border-bottom: 2px solid #bee1e6; /* Subtle border to separate header from content */
-            border-top-left-radius: 8px;
-            border-top-right-radius: 8px;
-        }
+.job-card > header {
+    background-color: #f8fafb; /* Light background for the header */
+    padding: 15px 20px;
+    margin: -30px -30px 20px -30px;
+    border-bottom: 2px solid #bee1e6; /* Subtle border to separate header from content */
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
 
-        .job-card h3 {
-            margin-top: 0;
-            color: #1a365d; /* Dark blue for the job title */
-            font-size: 1.5em;
-        }
+.job-card h3 {
+    margin-top: 0;
+    color: #1a365d; /* Dark blue for the job title */
+    font-size: 1.5em;
+}
 
-        .job-card section {
-            margin-top: 20px;
-            padding-top: 15px;
-            border-top: 1px solid #f0f0f0; /* Light border to separate sections */
-        }
+.job-card section {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #f0f0f0; /* Light border to separate sections */
+}
 
-        .job-card .apply-link-container {
-            margin-top: 25px;
-            padding-top: 15px;
-            border-top: 1px solid #e0e0e0; /* Light border to separate the apply link */
-        }
+.job-card .apply-link-container {
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px solid #e0e0e0; /* Light border to separate the apply link */
+}
 
-        .apply-btn {
-            display: inline-block;
-            background-color: #3182ce; /* Blue background for the apply button */
-            color: #ffffff; /* White text for contrast */
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: background-color 0.2s ease;
-        }
+.apply-btn {
+    display: inline-block;
+    background-color: #3182ce; /* Blue background for the apply button */
+    color: #ffffff; /* White text for contrast */
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
 
-        .apply-btn:hover {
-            background-color: #2b6cb0; /* Darker blue on hover for feedback */
-        }
+.apply-btn:hover {
+    background-color: #2b6cb0; /* Darker blue on hover for feedback */
+}
 
 /* apply.php Section */
 /* Application page only styling, e.g. styling of the form */
@@ -546,14 +577,14 @@ footer {
 #job-form select:focus,
 #job-form textarea:focus {
     outline: none;
-    border-color: #577331;
+    border-color: var(--green);
 }
 
 #job-form .radio-checkbox input[type="radio"],
 #job-form .radio-checkbox input[type="checkbox"] {
     width: auto;
     margin: 0;
-    accent-color:#577331;
+    accent-color: var(--green);
 }
 
 /* Form row layouts */
@@ -581,12 +612,12 @@ footer {
 }
 
 #job-form input[type="submit"] {
-    background-color: #046007;
+    background-color: var(--green-light);
     color:white;
 }
  
 #job-form input[type="submit"]:hover {
-    background-color: #033604;
+    background-color: var(--green-dark);
 }
 
 #job-form input[type="reset"] {
@@ -628,7 +659,7 @@ footer {
     justify-content: center;
 
     padding: 3rem 1.25rem;
-    background-color: white;
+    background-color: transparent;
 }
 
 .authentication-popup {
@@ -640,13 +671,13 @@ footer {
     background-color: white;
     border-radius: 14px;
 
-    box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px, rgba(0, 0, 0, 0, 0.04) 0x 1px 3px;
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px, rgba(0, 0, 0, 0, 0.04) 0px 1px 3px;
 }
 .authentication-popup h2 {
     margin: 0 0 0.5rem;
     text-align: center;
     font-size: clamp(1.5rem, 4vw, 2rem);
-    color: #033604;
+    color: var(--green-dark);
 }
 
 .authentication-description {
@@ -685,9 +716,10 @@ footer {
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 .authentication-form input:focus {
-    outline:none;
-    border-color: #577331;
-    box-shadow: 0 0 0 3px rgba(90, 115, 50, 0.15);
+    outline: 3px solid var(--green);
+    outline-offset: 2px;
+    border-color: var(--green);
+    box-shadow: none;
 }
 
 .authentication-hint {
@@ -707,7 +739,7 @@ footer {
     border: none;
     border-radius: 6px;
 
-    background-color: #577331;
+    background-color: var(--green);
     color: white;
 
     font: inherit;
@@ -718,15 +750,15 @@ footer {
     transition: background-color 0.2s ease, transform 0.2s ease;
 }
 .authentication-button:hover {
-    background-color: #77a737;
+    background-color: #2f4a12;
 }
 .authentication-button:active {
     transform: scale(0.95);
-    background-color: #033604;
+    background-color: var(--green-dark);
 }
 
 .authentication-button:focus-visible, .authentication-link a:focus-visible {
-    outline: 2px solid #77a737;
+    outline: 3px solid var(--green);
     outline-offset: 2px;
 }
 
@@ -750,28 +782,50 @@ footer {
     border-radius: 8px;
 
     background-color: rgb(235, 235, 235);
-    color: rgba(255, 40, 40);
+    color: rgb(160, 0, 0);
     line-height: 1.6;
-     box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px;
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px;
 }
 #success-message {
     margin: 1.25rem 0;
     padding: 0.8rem 1rem;
 
-    border: 2px solid #77a737;
-    border-left: 4px solid #77a737;
+    border: 2px solid var(--green-light);
+    border-left: 4px solid var(--green-light);
     border-radius: 8px;
 
     background-color: rgb(235, 235, 235);
-    color: #577331;
+    color: var(--green);
     line-height: 1.6;
-     box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px;
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px;
 }
 
 
 /* Media */
 /* For mobile or similar size width tabs */
+
+/* removes animations when motion is reduced, specifically the infinite shimmer since it was an accessibility issue */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation: none !important; /* makes it higher priority */
+        transition: none !important;
+    }
+}
+
 @media (max-width: 768px) {
+    #menu-toggle {
+        display: block; /* should stop keyboard from targeting it */
+        position: absolute;
+        opacity: 0;
+        width: 1px;
+        height: 1px;
+        margin: 0;
+    }
+    #menu-toggle:focus-visible + .hamburger {
+        outline: 3px solid var(--green);
+        outline-offset: 3px;
+    }
+
     .hamburger {
         display: inline-flex;
         align-items: center;
@@ -784,13 +838,17 @@ footer {
         padding: 0.5rem 1rem;
         transition: all 0.25s ease;
     }
-
+    .hamburger-text {
+        font-size: 1rem;
+        font-weight: bold;
+        margin-left: 0.5rem;
+    }
     .hamburger:hover {
         transform: scale(1.1);
         color: white;
         text-decoration: underline;
 
-        background-color: #77a737;
+        background-color: var(--green);
     }
 
     .main-nav, .nav-links {
@@ -801,6 +859,7 @@ footer {
         display: flex;
         flex-direction: column;
         position: absolute;
+        visibility: hidden;
 
         top: 100%;
         left: 0;
@@ -820,7 +879,7 @@ footer {
 
         pointer-events: none; /* stops links from being clicked on while the hamburger is closed/closing */
 
-        transition: max-height 0.4s ease, opacity 0.3s ease, transform 0.3s ease;
+        transition: max-height 0.4s ease, opacity 0.3s ease, transform 0.3s ease, visibility 0s linear 0.4s;
     }
 
     /* Shows the navigation links when the hamburger menu is opened */
@@ -828,12 +887,15 @@ footer {
         max-height: 800px;
         padding: 1rem 0;
         opacity: 1;
+        visibility: visible;
+        transition-delay: 0s;
         transform: translateY(0);
         pointer-events: auto;
     }
 
-    #description-section, #customer-satisfaction-section {
+    #description-section, #customer-satisfaction-section, #inclusivity-section {
         display: grid;
+        background-attachment: scroll;
     }
 
      /* Job form fields */
@@ -841,6 +903,10 @@ footer {
         grid-template-columns: 1fr;
         gap: 1rem;
     }
+    .jobs-layout {
+        grid-template-columns: 1fr; /* fix aside content stacking on phones */
+    }
+
 
     /* login.php and signup.php */
     .authentication-main {

@@ -10,7 +10,7 @@ include 'includes/header.inc';
 include 'includes/navigation.inc';
 ?>
     
-<main id="authentication-main">
+<main class="authentication-main">
     <section class="authentication-popup">
         <h2>Create an Account</h2>
         <p class="authentication-description">Sign up to get started</p>
