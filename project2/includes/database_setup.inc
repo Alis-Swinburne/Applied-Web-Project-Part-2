@@ -1,6 +1,6 @@
 <?php
 
-// This include is for creating tables if they do not exist, call it after setting $conn in the file you are using tables in
+// This include is for creating tables if they do not exist, call it after setting and verifying $conn in the file you are using tables in
 
 
 
