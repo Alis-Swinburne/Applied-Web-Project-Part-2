@@ -69,7 +69,7 @@ include 'includes/navigation.inc';
         </section>
 
         <div class="apply-link-container">
-            <a href="apply.html?ref=DEV042" target="_self" class="apply-btn">Apply for this Position</a>
+            <a href="apply.php?ref=DEV042" target="_self" class="apply-btn">Apply for this Position</a>
         </div>
     </article>
     
