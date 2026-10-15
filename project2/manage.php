@@ -18,9 +18,14 @@ include 'includes/navigation.inc';
         <p>Welcome admin!</>
  
         <!-- management tools code here! check Jira or assignment requirements for list -->
+
+
     <?php else: ?>
-        <h2>Access Denied</h2>
-        <p>You do not have permission to access this page.</p>
+        <?php 
+        // Immediately redirects back to index.php if user doesn't have admin access
+        header("Location: index.php");
+        exit();
+        ?>
     <?php endif; ?>
 </main>
 

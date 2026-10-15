@@ -27,6 +27,6 @@ $keywords = $page_keywords ?? $default_keywords;
         <meta name="description" content="<?php echo htmlspecialchars($description); ?>">
         <link rel="stylesheet" href="styles/styles.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&family=Unica+One&display=swap">
-        <script src="https://kit.fontawesome.com/8b43896124.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="fonts/fontawesome/css/all.min.css">
         <title><?php echo htmlspecialchars($title); ?></title>
     </head>
