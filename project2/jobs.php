@@ -110,7 +110,7 @@ include 'includes/navigation.inc';
         </section>
 
         <div class="apply-link-container">
-            <a href="apply.html?ref=SEC918" target="_self" class="apply-btn">Apply for this Position</a>
+            <a href="apply.php?ref=SEC918" target="_self" class="apply-btn">Apply for this Position</a>
         </div>
     </article>
 
@@ -151,7 +151,7 @@ include 'includes/navigation.inc';
         </section>
 
         <div class="apply-link-container">
-            <a href="apply.html?ref=DAT551" target="_self" class="apply-btn">Apply for this Position</a>
+            <a href="apply.php?ref=DAT551" target="_self" class="apply-btn">Apply for this Position</a>
         </div>
     </article>
 </main>
