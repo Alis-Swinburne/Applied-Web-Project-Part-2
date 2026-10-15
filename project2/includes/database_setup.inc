@@ -13,5 +13,10 @@ if (!mysqli_query($conn, $sql)) {
     error_log("User table setup failed: ". mysqli_error($conn));
     die("Database setup failed: ". mysqli_error($conn));
 }
+else {
+    // insert admin user automatically as first entry in db
+    $sql = "INSERT INTO user (username, password) VALUES ('admin', 'admin')";
+    mysqli_query($conn, $sql);
+}
 
 ?>
