@@ -10,7 +10,7 @@ include 'includes/navigation.inc';
     <h2 style="text-align: center; font-size: 3rem; margin-bottom: 0">Job Application Form</h2>
     <p style="text-align: center;">Please fill all required fields to submit your application</p>
 
-    <form method="post" action="process_eoi.php" id="job-form">
+    <form method="post" action="process_eoi.php" id="job-form" novalidate="novalidate">
 
         <!-- Job reference number -->
         <fieldset>
