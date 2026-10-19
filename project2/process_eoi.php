@@ -1,4 +1,11 @@
 <?php
+function sanitise_input($data){
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+}
+    
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: apply.php');
     exit();
@@ -33,6 +40,6 @@ $query = "CREATE TABLE IF NOT EXISTS `eoi` (
 
 $result = mysqli_query($conn, $query);
 
-require_once 'includes/footer.inc';
+include 'includes/footer.inc';
 
 mysqli_close($conn);
