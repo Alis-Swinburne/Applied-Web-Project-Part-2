@@ -519,11 +519,11 @@ footer {
     background-color: #2b6cb0; /* Darker blue on hover for feedback */
 }
 
-/* apply.php Section */
-/* Application page only styling, e.g. styling of the form */
+/* apply.php and profile.php Section */
+/* Application and profile page only styling, e.g. styling of the form */
 
 /* Main form container */
-#job-form {
+#job-form, #profile-form {
     margin: 2rem auto;
     max-width: 850px;
     padding: 1.75rem;
@@ -532,25 +532,26 @@ footer {
 }
 
 /* Form sections */
-#job-form fieldset {
+#job-form fieldset, #profile-form fieldset {
     border: none;
     border-top: 1px solid lightgray;
     margin: 1.5rem;
 }
 
 /* Form headings */
-#job-form legend {
+#job-form legend, #profile-form legend {
     font-weight: bold;
     font-size: 1.75rem;
     margin-bottom: 1rem;
 }
 
 /* Labels and form inputs */
-#job-form label {
+#job-form label, #profile-form label {
     font-weight: bold;
 }
 
-#job-form input, #job-form select, #job-form textarea {
+#job-form input, #job-form select, #job-form textarea,
+#profile-form input, #profile-form select, #profile-form textarea {
     padding: 0.75rem;
     border: 1px solid lightgray;
     border-radius: 5px;
@@ -568,20 +569,25 @@ footer {
 }
 
 
-#job-form .radio-checkbox label {
+#job-form .radio-checkbox label, #profile-form .radio-checkbox label {
     font-weight: normal;
 }
 
 /* Green focus effect */
 #job-form input:focus,
 #job-form select:focus,
-#job-form textarea:focus {
+#job-form textarea:focus,
+#profile-form input:focus,
+#profile-form select:focus,
+#profile-form textarea:focus {
     outline: none;
     border-color: var(--green);
 }
 
 #job-form .radio-checkbox input[type="radio"],
-#job-form .radio-checkbox input[type="checkbox"] {
+#job-form .radio-checkbox input[type="checkbox"],
+#profile-form .radio-checkbox input[type="radio"],
+#profile-form .radio-checkbox input[type="checkbox"] {
     width: auto;
     margin: 0;
     accent-color: var(--green);
@@ -604,28 +610,30 @@ footer {
 
 /* Form buttons */
 #job-form input[type="submit"], 
-#job-form input[type="reset"] {
+#job-form input[type="reset"],
+#profile-form input[type="submit"], 
+#profile-form input[type="reset"] {
     font-weight: bold;
     width: 10rem;
     height: 3rem;
     margin: 0.5rem
 }
 
-#job-form input[type="submit"] {
+#job-form input[type="submit"], #profile-form input[type="submit"] {
     background-color: var(--green-light);
     color:white;
 }
  
-#job-form input[type="submit"]:hover {
+#job-form input[type="submit"]:hover, #profile-form input[type="submit"]:hover {
     background-color: var(--green-dark);
 }
 
-#job-form input[type="reset"] {
+#job-form input[type="reset"], #profile-form input[type="reset"] {
     background-color: #d8d9d7;
 }
 
  
-#job-form input[type="reset"]:hover {
+#job-form input[type="reset"]:hover, #profile-form input[type="reset"]:hover {
     background-color: #a0a19f;
 }
 
@@ -903,6 +911,15 @@ footer {
         grid-template-columns: 1fr;
         gap: 1rem;
     }
+
+    #job-form, #profile-form {
+        padding: 1rem;
+    }
+
+    #job-form fieldset, #profile-form fieldset {
+        margin: 1rem 0;
+    }
+
     .jobs-layout {
         grid-template-columns: 1fr; /* fix aside content stacking on phones */
     }

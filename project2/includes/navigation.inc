@@ -3,7 +3,7 @@
 require_once './verify_access.php';
 
 $current = $nav_current ?? basename($_SERVER['SCRIPT_NAME']); // Keeps a track of the current page
-$brand = $site_name ?? "UPDATE COMPANY NAME";
+$brand = $site_name ?? "Finova";
 $logged_in = isset($_SESSION['user_id']);
 $conn = mysqli_connect($host, $db_user, $pwd, $sql_db);
 
@@ -14,13 +14,16 @@ $nav_items = [
     'about.php' => ['ABOUT', 'fa-circle-info'], 
 ];
 
-// For determing admin access
+// For determining admin access
 
 // If logged in add the manage nav button and the logout button
 // Else add the login and signup buttons
 if($logged_in) {
     if(verify_access($conn)) {
         $nav_items['manage.php'] = ['MANAGE', 'fa-table-list'];
+    }
+    else {
+        $nav_items['profile.php'] = ['PROFILE', 'fa-circle-user'];
     }
 
     $nav_items['logout.php'] = ['LOGOUT', 'fa-right-from-bracket'];
@@ -36,8 +39,8 @@ else {
             <nav class="main-nav" aria-label="Main Navigation">
                 <a href="index.php" class="brand">
                     <!-- Custom created Logo in Canva (free to use) -->
-                    <img src="images/FinTech_logo.png" 
-                    alt="UPDATE COMPANY NAME Logo"
+                    <img src="images/Finova_logo.png" 
+                    alt="Finova Logo"
                     loading="lazy">
                     
                     <div class="brand-text">

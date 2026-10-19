@@ -20,7 +20,7 @@ include 'includes/navigation.inc';
                 </span>.
             </h1>
 
-            <p class="hero-subtext">Interested in working at FinTech?</p>
+            <p class="hero-subtext">Interested in working at Finova?</p>
             <a href="jobs.php">JOB LISTINGS</a>
         </header>
     </section>
@@ -28,10 +28,10 @@ include 'includes/navigation.inc';
     <section class="index-section" id="description-section">
         <div class="section-left">
             <h2 style="text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.3)">WHO ARE WE?</h2>
-            <p>FinTech is a secure financial technology company dedicated to making digital finance safe, simple, and accessible for everyone. 
+            <p>Finova is a secure financial technology company dedicated to making digital finance safe, simple, and accessible for everyone. 
                 We provide services for digital payments, budgeting, account management, and financial education, helping our customers take
                 control of their finances. Our platform combines user-friendly technology with strong security measures to ensure a safe and
-                easy financial experience. By giving users the right tools and knowledge, FinTech aims to make managing money, easier, and more convenient. 
+                easy financial experience. By giving users the right tools and knowledge, Finova aims to make managing money, easier, and more convenient. 
             </p>
         </div>
         <div class="section-right">
@@ -46,15 +46,15 @@ include 'includes/navigation.inc';
         <div class="section-left">
             <h3 style="text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.3)">WHY CHOOSE US?</h3>
             <p>The results show that 96.7% of our customers report a great increase in understanding their finances. A further 63.9% of those customers
-                found that FinTech's tools significantly reduced the amount of time they spent managing their finances. As seen in the adjacent table,
-                FinTech had a higher average of satisfied customers when it came to using our tools in comparison to other popular financial tech companies.
+                found that Finova's tools significantly reduced the amount of time they spent managing their finances. As seen in the adjacent table,
+                Finova had a higher average of satisfied customers when it came to using our tools in comparison to other popular financial tech companies.
             </p>
         </div>
         <div class="section-right">
             <div class="table-scroll" role="region" aria-labelledby="ratings-caption" tabindex="0">
                 <table>
                     <caption id="ratings-caption">
-                        Customer satisfaction ratings out of 10 for each UPDATE COMPANY NAME tool, compared with two other companies
+                        Customer satisfaction ratings out of 10 for each Finova tool, compared with two other companies
                     </caption>
                     <colgroup>
                         <col>
@@ -75,7 +75,7 @@ include 'includes/navigation.inc';
                     </thead>
                     <tbody>
                         <tr>
-                            <th scope="row">FinTech</th>
+                            <th scope="row">Finova</th>
                             <td>9.8</td>
                             <td>9.1</td>
                             <td>9.4</td>
@@ -107,7 +107,7 @@ include 'includes/navigation.inc';
     <section class="index-section" id="inclusivity-section">
         <div class="section-left">
             <h2 style="text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.3)">INCLUSIVITY</h2>
-            <p> At FinTech, we believe in respecting and including people of all backgrounds, genders, and ethnicities. 
+            <p> At Finova, we believe in respecting and including people of all backgrounds, genders, and ethnicities. 
                 It is our mission to inspire and develop financial skills in our customers and employees that will help fulfill their 
                 monetary goals. We are also committed to promoting equal opportunities and supporting the employment, inclusion, and professional
                 development of Aboriginal and Torres Strait Islander peoples.
@@ -120,7 +120,7 @@ include 'includes/navigation.inc';
         <figure class="section-right">
             <!-- Stock photo found at: https://www.istockphoto.com/en/photo/group-of-business-persons-talking-in-the-office-gm2163365819-583720271 -->
             <img src="images/index/inclusivity-image.jpg"
-            alt="Employees happy at FinTech (join our company!)"
+            alt="Employees happy at Finova (join our company!)"
             loading="lazy">
         </figure>
     </section>
