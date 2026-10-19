@@ -62,7 +62,7 @@ include 'includes/navigation.inc';
                         </label>
 
                         <label>
-                            <input type="radio" name="gender" id="nonbinary" value="non-binary">
+                            <input type="radio" name="gender" id="nonbinary" value="nonbinary">
                             Non-binary
                         </label>
 

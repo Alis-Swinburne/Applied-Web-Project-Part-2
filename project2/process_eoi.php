@@ -10,6 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: apply.php');
     exit();
 }
+
 $page_title = "Process EOI";
 require_once 'settings.php';
 $conn = mysqli_connect($host, $db_user, $pwd, $sql_db);
@@ -39,6 +40,22 @@ $query = "CREATE TABLE IF NOT EXISTS `eoi` (
             )";
 
 $result = mysqli_query($conn, $query);
+
+if ($_SERVER["REQUEST_METHOD"] == "POST"){
+    $job_ref = sanitise_input($_POST["jobreference"]);
+    $first_name = sanitise_input($_POST["firstname"]);
+    $last_name = sanitise_input($_POST["lastname"]);
+    $dob = sanitise_input($_POST['dob']);
+    $gender = sanitise_input($_POST['gender']);
+    $street = sanitise_input($_POST["streetaddress"]);
+    $suburb = sanitise_input($_POST['suburb']);
+    $state = sanitise_input($_POST['state']);
+    $postcode = sanitise_input($_POST['postcode']);
+    $email = sanitise_input($_POST['email']);
+    $phone = sanitise_input($_POST['phone']);
+    $skills = isset($_POST["skills"]) ? implode(", ", array_map('sanitise_input', $_POST["skills"])) : "";
+    $other_skills = sanitise_input($_POST['otherskills']);
+}
 
 include 'includes/footer.inc';
 
