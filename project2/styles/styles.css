@@ -551,7 +551,7 @@ footer {
 }
 
 #job-form input, #job-form select, #job-form textarea,
-#profile-form input, #profile-form select, #profile-form textarea {
+#profile-form input, #profile-form select, #profile-form textarea, #profile-form button, #delete-form button {
     padding: 0.75rem;
     border: 1px solid lightgray;
     border-radius: 5px;
@@ -612,7 +612,8 @@ footer {
 #job-form input[type="submit"], 
 #job-form input[type="reset"],
 #profile-form input[type="submit"], 
-#profile-form input[type="reset"] {
+#profile-form input[type="reset"],
+#delete-form button {
     font-weight: bold;
     width: 10rem;
     height: 3rem;
@@ -635,6 +636,38 @@ footer {
  
 #job-form input[type="reset"]:hover, #profile-form input[type="reset"]:hover {
     background-color: #a0a19f;
+}
+
+.input-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+#delete-form {
+    display: flex;
+    justify-content: center;
+}
+
+#delete-form button {
+    background-color: rgba(255, 140, 140);
+}
+#delete-form button:hover {
+    background-color: rgba(160, 0, 0);
+}
+.error-message {
+    margin: 1.25rem 0;
+    padding: 0.8rem 1rem;
+
+    border: 2px solid rgba(255, 140, 140);
+    border-left: 4px solid rgba(255, 140, 140);
+    border-radius: 8px;
+
+    background-color: rgb(235, 235, 235);
+    color: rgb(160, 0, 0);
+    line-height: 1.6;
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px;
 }
 
 
@@ -794,7 +827,7 @@ footer {
     line-height: 1.6;
     box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px;
 }
-#success-message {
+.success-message {
     margin: 1.25rem 0;
     padding: 0.8rem 1rem;
 

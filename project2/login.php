@@ -69,7 +69,7 @@ include 'includes/navigation.inc';
         <p class="authentication-description">Log in to your account to continue</p>
 
         <?php if ($signup_success): ?>
-            <p id="success-message"><em>You have successfully made an account, you can now log in.</em><p>
+            <p class="success-message"><em>You have successfully made an account, you can now log in.</em><p>
         <?php endif; ?>
 
         <?php if ($is_invalid): ?>

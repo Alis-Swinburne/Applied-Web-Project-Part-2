@@ -7,7 +7,11 @@ require_once 'includes/session.inc';
 $conn = mysqli_connect($host, $db_user, $pwd, $sql_db);
 
 if (!$conn) {
-    die("Unable to connect to databse.");
+    die("Unable to connect to database.");
+}
+
+if(empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 
 include 'includes/header.inc';
@@ -218,10 +222,18 @@ function escape_html($value) {
             <?php echo escape_html($profile['other_skills']); ?></textarea>
         </fieldset>
 
-        <input type="submit" value="Save Changes">
-        <input type="reset" value="Reset">
+        <div class="input-buttons">
+            <input type="submit" value="Save Changes">
+            <input type="reset" value="Reset">
+        </div>
 
     </form>
+
+    <form method="POST" action="process_profile_delete.php" id="delete-form" onsubmit="return confirm('Are you sure you want to delete your account? This cannot be undone.');">
+        <input type="hidden" name="csrf_token" value="<?php echo escape_html($_SESSION['csrf_token'] ?? ''); ?>">
+        <button type="submit" name="delete_account" value="1">Delete Account</button>
+    </form>
+
 </main>
 
 <?php include 'includes/footer.inc'; ?>
