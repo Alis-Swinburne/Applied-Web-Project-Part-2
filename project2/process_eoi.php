@@ -109,7 +109,28 @@ if (!empty($errors)) {
         echo "<p>$error</p>";
         }
 } else {
+    $stmt = mysqli_prepare($conn, "INSERT INTO eoi (`job_ref`, `first_name`, `last_name`, `dob`, `gender`, `street`, `suburb`, `state`, `postcode`, `email`, `phone`, `skills`, `other_skills`) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+    if ($stmt) {
+        mysqli_stmt_bind_param(
+        $stmt, "sssssssssssss", $job_ref, $first_name, $last_name, $dob, $gender, $street, $suburb, $state, $postcode, $email, $phone, $skills, $other_skills);
     
+
+        if (mysqli_stmt_execute($stmt)) {
+            $eoi_number = mysqli_insert_id($conn);
+            echo "<h1>Your application has been submitted</h1>";
+            echo "<p>Thank you, " . htmlspecialchars($first_name) . " " . htmlspecialchars($last_name) . ", for your application.</p>";;
+            echo "<p> We have successfully received your interest for $job_ref and will contact you soon!</p>";
+            echo "<p>Your EOI number is $eoi_number</p>";
+        }else{
+            echo "<p>Unable to submit your application. Please try again later</p>";
+        }
+        mysqli_stmt_close($stmt);
+
+    } else {
+        echo "<p> Unable to process your application. Please try again later.</p>";
+    }   
 }
 
 include 'includes/footer.inc';
