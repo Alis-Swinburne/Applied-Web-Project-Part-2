@@ -18,7 +18,7 @@ function sanitise_input($data) {
 }
 
 $id = filter_var($_SESSION['user_id'] ?? null, FILTER_VALIDATE_INT);
-if (!$id || $id < 1) {
+if ($id === false || $id === null || $id < 1) {
     mysqli_close($conn);
     die("Please log in to update your profile.");
 }
@@ -41,22 +41,25 @@ $allowed_genders = ['female', 'male', 'nonbinary', 'prefernot'];
 $allowed_states = ['vic', 'nsw', 'qld', 'nt', 'wa', 'sa', 'tas', 'act'];
 $allowed_skills = ['cybersecurity', 'web_development', 'sql_database', 'cloud_cicd', 'problem_solving'];
 
-if (!$id || $id < 1 || 
-    !preg_match('/\A[a-zA-Z]{1,20}\z/', $first_name) ||
-    !preg_match('/\A[a-zA-Z]{1,20}\z/', $last_name) ||
-    !in_array($gender, $allowed_genders, true) ||
-    $street === '' || strlen($street) > 40 ||
-    $suburb === '' || strlen($suburb) > 40 ||
-    !in_array($state, $allowed_states, true) ||
-    !preg_match('/\A[0-9]{4}\z/', $postcode) ||
-    !filter_var($email, FILTER_VALIDATE_EMAIL) ||
-    strlen($email) > 254 ||
-    !preg_match('/\A[0-9]{8,12}\z/', $phone) ||
-    !is_array($skills) ||
-    count(array_diff($skills, $allowed_skills)) > 0
-) {
+// Server-side validation (more clean than before)
+$valid = preg_match('/\A[a-zA-Z]{1,20}\z/', $first_name) && // First name matches criteria
+        preg_match('/\A[a-zA-Z]{1,20}\z/', $last_name) && // Last name matches criteria
+        in_array($gender, $allowed_genders, true) && // Gender is in allowed genders
+        $street !== '' && strlen($street) <= 40 && // Street is not empty and is less than or equal to 40 characters
+        $suburb !== '' && strlen($suburb) <= 40 && // Suburb is not empty and is less than or equal to 40 characters
+        in_array($state, $allowed_states, true) && // State is in allowed states
+        preg_match('/\A[0-9]{4}\z/', $postcode) && // Postcode matches criteria
+        filter_var($email, FILTER_VALIDATE_EMAIL) !== false && // Email is valid 
+        strlen($email) <= 254 && // Email length is less than or equal to 254
+        preg_match('/\A[0-9]{8,12}\z/', $phone) && // Phone matches criteria
+        is_array($skills) && // Skills is an array
+        count(array_diff($skills, $allowed_skills)) === 0 && // Skills and allowed skills are equal
+        is_string($other_skills) && // Submitted skills is string
+        strlen($other_skills, 'UTF-8') <= 2000; // Skills length less than or equal to 2000
+
+if (!$valid) {
+    $_SESSION['profile_error'] = "Invalid input, please check the information you entered matches the listed criteria.";
     mysqli_close($conn);
-    die("Invalid input!");
 }
 
 $date = DateTime::createFromFormat('!d/m/Y', $dob);
@@ -67,8 +70,8 @@ if (!$date || ($date_errors !== false &&
     $date_errors['error_count'] > 0)) ||
     $date->format('d/m/Y') !== $dob
 ) {
+    $_SESSION['profile_error'] = "Date of Birth is invalid.";
     mysqli_close($conn);
-    die("Invalid Date of Birth.");
 }
 
 $skills = array_unique($skills);
@@ -82,8 +85,8 @@ $stmt = mysqli_prepare($conn, $sql);
 
 if (!$stmt) {
     error_log("Failed to update profile: " . mysqli_error($conn));
+    $_SESSION['profile_error'] = "Could not update profile, try again.";
     mysqli_close($conn);
-    die("Unable to update profile.");
 }
 
 mysqli_stmt_bind_param(
@@ -107,8 +110,9 @@ mysqli_stmt_bind_param(
 if (mysqli_stmt_execute($stmt)) {
     if (mysqli_stmt_affected_rows($stmt) >= 0) {
         mysqli_stmt_close($stmt);
+        $_SESSION['profile_success'] = "Successfully updated your details.";
         mysqli_close($conn);
-        header('Location: profile.php?id=' . $id . '&updated=1');
+        header('Location: profile.php');
         exit();
     }
 }

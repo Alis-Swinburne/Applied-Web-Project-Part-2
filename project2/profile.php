@@ -10,6 +10,12 @@ if (!$conn) {
     die("Unable to connect to database.");
 }
 
+$profile_success = $_SESSION['profile_success'] ?? false;
+unset($_SESSION['profile_success']);
+
+$profile_error = $_SESSION['profile_error'] ?? null;
+unset($_SESSION['profile_error']);
+
 if(empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
@@ -72,6 +78,14 @@ function escape_html($value) {
     <h1 style="text-align: center; font-size: 3rem; margin-bottom: 0">Edit Profile</h1>
     <p style="text-align: center;">Update your personal information and professional skills below to make applying easier.</p>
 
+    <?php if ($profile_success): ?>
+            <p class="success-message"><em>You have successfully made an account, you can now log in.</em><p>
+        <?php endif; ?>
+
+        <?php if ($profile_error): ?>
+            <p class="error-message"><em><?php echo $profile_error ?></em></p>
+        <?php endif; ?>
+
     <form method="POST" action="process_profile_update.php" id="profile-form">
 
         <fieldset>
@@ -82,12 +96,14 @@ function escape_html($value) {
                     <label for="firstname">First Name</label>
                     <input type="text" id="firstname" name="firstname" required maxlength="20" 
                     pattern="[a-zA-Z]{1,20}" value="<?php echo escape_html($profile['first_name']); ?>">
+                    <p class="authentication-hint"><em>Must be between 1 and 20 letters.</em></p>
                 </div>
 
                 <div class="form-field">
                     <label for="lastname">Last Name</label>
                     <input type="text" id="lastname" name="lastname" required maxlength="20" 
                     pattern="[a-zA-Z]{1,20}" value="<?php echo escape_html($profile['last_name']); ?>">
+                    <p class="authentication-hint"><em>Must be between 1 and 20 letters.</em></p>
                 </div>
             </div>
 
@@ -132,12 +148,14 @@ function escape_html($value) {
             <label for="streetaddress">Street Address</label>
             <input type="text" id="streetaddress" name="streetaddress" required maxlength="40"
             value="<?php echo escape_html($profile['street']); ?>">
+            <p class="authentication-hint"><em>Must be between 1 and 40 characters.</em></p>
 
             <div class="form-row-three">
                 <div class="form-field">
                     <label for="suburb">Suburb / Town</label>
                     <input type="text" id="suburb" name="suburb" required maxlength="40"
                     value="<?php echo escape_html($profile['suburb']); ?>">
+                    <p class="authentication-hint"><em>Must be between 1 and 40 characters.</em></p>
                 </div>
 
                 <div class="form-field">
@@ -168,6 +186,7 @@ function escape_html($value) {
                     <label for="postcode">Postcode</label>
                     <input type="text" id="postcode" name="postcode" required pattern="[0-9]{4}" maxlength="4" 
                     value="<?php echo escape_html($profile['postcode']); ?>">
+                    <p class="authentication-hint"><em>Must be between 1 and 4 numbers.</em></p>
                 </div>
             </div>
         </fieldset>
@@ -177,10 +196,12 @@ function escape_html($value) {
             <label for="email">Email</label>
             <input type="email" name="email" id="email" required maxlength="254" placeholder="example@email.com"
             value="<?php echo escape_html($profile['email']); ?>">
+            <p class="authentication-hint"><em>Must be a valid email.</em></p>
 
             <label for="phone">Phone Number</label>
             <input type="text" name="phone" id="phone" required pattern="[0-9]{8,12}" maxlength="12"
             value="<?php echo escape_html($profile['phone']); ?>">
+            <p class="authentication-hint"><em>Must be between 1 and 12 numbers.</em></p>
         </fieldset>
 
         <fieldset>
