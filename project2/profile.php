@@ -79,7 +79,7 @@ function escape_html($value) {
     <p style="text-align: center;">Update your personal information and professional skills below to make applying easier.</p>
 
     <?php if ($profile_success): ?>
-            <p class="success-message"><em>You have successfully made an account, you can now log in.</em><p>
+            <p class="success-message"><em>Profile has successfully been updated.</em><p>
         <?php endif; ?>
 
         <?php if ($profile_error): ?>

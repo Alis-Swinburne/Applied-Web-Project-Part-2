@@ -687,7 +687,7 @@ footer {
 }
 
 
-/* login.php AND signup.php section (use the same visuals) */
+/* login.php, signup.php, and profile.php (some parts) section (use the same visuals) */
 .authentication-main {
     width: 100%;
     max-width: 100%;
@@ -714,7 +714,7 @@ footer {
 
     box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px, rgba(0, 0, 0, 0, 0.04) 0px 1px 3px;
 }
-.authentication-popup h2 {
+.authentication-popup h1 {
     margin: 0 0 0.5rem;
     text-align: center;
     font-size: clamp(1.5rem, 4vw, 2rem);
@@ -722,7 +722,7 @@ footer {
 }
 
 .authentication-description {
-    margin: 1rem 0 0 1.75rem;
+    margin: 0 0 0.5 rem;
     text-align: center;
     color: rgb(60, 60, 60);
     line-height: 1.6;
@@ -736,6 +736,9 @@ footer {
 }
 .form-field {
     margin: 0.2rem;
+}
+#profile-form .form-field {
+    gap: 0.5rem;
 }
 
 .authentication-form label {
@@ -770,6 +773,11 @@ footer {
     font-size: 0.8rem;
     line-height: 1.6;
     text-align: left;
+}
+#profile-form .authentication-hint {
+    margin-top: -1rem;
+    margin-bottom: 0.5rem
+
 }
 
 .authentication-button {
@@ -949,8 +957,11 @@ footer {
         padding: 1rem;
     }
 
-    #job-form fieldset, #profile-form fieldset {
+    #job-form fieldset {
         margin: 1rem 0;
+    }
+    #profile-form fieldset {
+        margin: 2rem 0;
     }
 
     .jobs-layout {

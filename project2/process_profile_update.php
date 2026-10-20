@@ -1,6 +1,6 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: profile.php');
+    header('Location: index.php');
     exit();
 }
 
@@ -20,7 +20,9 @@ function sanitise_input($data) {
 $id = filter_var($_SESSION['user_id'] ?? null, FILTER_VALIDATE_INT);
 if ($id === false || $id === null || $id < 1) {
     mysqli_close($conn);
-    die("Please log in to update your profile.");
+    $_SESSION['profile_error'] = "Please login to update your profile.";
+    header('Location: profile.php');
+    exit();
 }
 
 $first_name = sanitise_input($_POST['firstname'] ?? '');
@@ -55,11 +57,13 @@ $valid = preg_match('/\A[a-zA-Z]{1,20}\z/', $first_name) && // First name matche
         is_array($skills) && // Skills is an array
         count(array_diff($skills, $allowed_skills)) === 0 && // Skills and allowed skills are equal
         is_string($other_skills) && // Submitted skills is string
-        strlen($other_skills, 'UTF-8') <= 2000; // Skills length less than or equal to 2000
+        strlen($other_skills) <= 2000; // Skills length less than or equal to 2000
 
 if (!$valid) {
     $_SESSION['profile_error'] = "Invalid input, please check the information you entered matches the listed criteria.";
     mysqli_close($conn);
+    header('Location: profile.php');
+    exit();
 }
 
 $date = DateTime::createFromFormat('!d/m/Y', $dob);
@@ -72,6 +76,8 @@ if (!$date || ($date_errors !== false &&
 ) {
     $_SESSION['profile_error'] = "Date of Birth is invalid.";
     mysqli_close($conn);
+    header('Location: profile.php');
+    exit();
 }
 
 $skills = array_unique($skills);
@@ -87,6 +93,8 @@ if (!$stmt) {
     error_log("Failed to update profile: " . mysqli_error($conn));
     $_SESSION['profile_error'] = "Could not update profile, try again.";
     mysqli_close($conn);
+    header('Location: profile.php');
+    exit();
 }
 
 mysqli_stmt_bind_param(
