@@ -519,11 +519,11 @@ footer {
     background-color: #2b6cb0; /* Darker blue on hover for feedback */
 }
 
-/* apply.php Section */
-/* Application page only styling, e.g. styling of the form */
+/* apply.php and profile.php Section */
+/* Application and profile page only styling, e.g. styling of the form */
 
 /* Main form container */
-#job-form {
+#job-form, #profile-form {
     margin: 2rem auto;
     max-width: 850px;
     padding: 1.75rem;
@@ -532,25 +532,26 @@ footer {
 }
 
 /* Form sections */
-#job-form fieldset {
+#job-form fieldset, #profile-form fieldset {
     border: none;
     border-top: 1px solid lightgray;
     margin: 1.5rem;
 }
 
 /* Form headings */
-#job-form legend {
+#job-form legend, #profile-form legend {
     font-weight: bold;
     font-size: 1.75rem;
     margin-bottom: 1rem;
 }
 
 /* Labels and form inputs */
-#job-form label {
+#job-form label, #profile-form label {
     font-weight: bold;
 }
 
-#job-form input, #job-form select, #job-form textarea {
+#job-form input, #job-form select, #job-form textarea,
+#profile-form input, #profile-form select, #profile-form textarea, #profile-form button, #delete-form button {
     padding: 0.75rem;
     border: 1px solid lightgray;
     border-radius: 5px;
@@ -568,20 +569,25 @@ footer {
 }
 
 
-#job-form .radio-checkbox label {
+#job-form .radio-checkbox label, #profile-form .radio-checkbox label {
     font-weight: normal;
 }
 
 /* Green focus effect */
 #job-form input:focus,
 #job-form select:focus,
-#job-form textarea:focus {
+#job-form textarea:focus,
+#profile-form input:focus,
+#profile-form select:focus,
+#profile-form textarea:focus {
     outline: none;
     border-color: var(--green);
 }
 
 #job-form .radio-checkbox input[type="radio"],
-#job-form .radio-checkbox input[type="checkbox"] {
+#job-form .radio-checkbox input[type="checkbox"],
+#profile-form .radio-checkbox input[type="radio"],
+#profile-form .radio-checkbox input[type="checkbox"] {
     width: auto;
     margin: 0;
     accent-color: var(--green);
@@ -604,29 +610,64 @@ footer {
 
 /* Form buttons */
 #job-form input[type="submit"], 
-#job-form input[type="reset"] {
+#job-form input[type="reset"],
+#profile-form input[type="submit"], 
+#profile-form input[type="reset"],
+#delete-form button {
     font-weight: bold;
     width: 10rem;
     height: 3rem;
     margin: 0.5rem
 }
 
-#job-form input[type="submit"] {
+#job-form input[type="submit"], #profile-form input[type="submit"] {
     background-color: var(--green-light);
     color:white;
 }
  
-#job-form input[type="submit"]:hover {
+#job-form input[type="submit"]:hover, #profile-form input[type="submit"]:hover {
     background-color: var(--green-dark);
 }
 
-#job-form input[type="reset"] {
+#job-form input[type="reset"], #profile-form input[type="reset"] {
     background-color: #d8d9d7;
 }
 
  
-#job-form input[type="reset"]:hover {
+#job-form input[type="reset"]:hover, #profile-form input[type="reset"]:hover {
     background-color: #a0a19f;
+}
+
+.input-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+#delete-form {
+    display: flex;
+    justify-content: center;
+}
+
+#delete-form button {
+    background-color: rgba(255, 140, 140);
+}
+#delete-form button:hover {
+    background-color: rgba(160, 0, 0);
+}
+.error-message {
+    margin: 1.25rem 0;
+    padding: 0.8rem 1rem;
+
+    border: 2px solid rgba(255, 140, 140);
+    border-left: 4px solid rgba(255, 140, 140);
+    border-radius: 8px;
+
+    background-color: rgb(235, 235, 235);
+    color: rgb(160, 0, 0);
+    line-height: 1.6;
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px;
 }
 
 
@@ -646,7 +687,7 @@ footer {
 }
 
 
-/* login.php AND signup.php section (use the same visuals) */
+/* login.php, signup.php, and profile.php (some parts) section (use the same visuals) */
 .authentication-main {
     width: 100%;
     max-width: 100%;
@@ -673,7 +714,7 @@ footer {
 
     box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px, rgba(0, 0, 0, 0, 0.04) 0px 1px 3px;
 }
-.authentication-popup h2 {
+.authentication-popup h1 {
     margin: 0 0 0.5rem;
     text-align: center;
     font-size: clamp(1.5rem, 4vw, 2rem);
@@ -681,7 +722,7 @@ footer {
 }
 
 .authentication-description {
-    margin: 1rem 0 0 1.75rem;
+    margin: 0 0 0.5 rem;
     text-align: center;
     color: rgb(60, 60, 60);
     line-height: 1.6;
@@ -695,6 +736,9 @@ footer {
 }
 .form-field {
     margin: 0.2rem;
+}
+#profile-form .form-field {
+    gap: 0.5rem;
 }
 
 .authentication-form label {
@@ -729,6 +773,11 @@ footer {
     font-size: 0.8rem;
     line-height: 1.6;
     text-align: left;
+}
+#profile-form .authentication-hint {
+    margin-top: -1rem;
+    margin-bottom: 0.5rem
+
 }
 
 .authentication-button {
@@ -786,7 +835,7 @@ footer {
     line-height: 1.6;
     box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px;
 }
-#success-message {
+.success-message {
     margin: 1.25rem 0;
     padding: 0.8rem 1rem;
 
@@ -903,6 +952,18 @@ footer {
         grid-template-columns: 1fr;
         gap: 1rem;
     }
+
+    #job-form, #profile-form {
+        padding: 1rem;
+    }
+
+    #job-form fieldset {
+        margin: 1rem 0;
+    }
+    #profile-form fieldset {
+        margin: 2rem 0;
+    }
+
     .jobs-layout {
         grid-template-columns: 1fr; /* fix aside content stacking on phones */
     }

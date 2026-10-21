@@ -12,7 +12,7 @@ include 'includes/navigation.inc';
     
 <main class="authentication-main">
     <section class="authentication-popup">
-        <h2>Create an Account</h2>
+        <h1>Create an Account</h1>
         <p class="authentication-description">Sign up to get started</p>
 
         <?php if ($signup_error): ?>

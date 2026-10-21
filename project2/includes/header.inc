@@ -7,10 +7,10 @@
 
 
 // Default site wide settings/variables
-$site_name = "UPDATE COMPANY NAME";
+$site_name = "Finova";
 $site_author = "Juliette Grove, Ada Yong, Andrea McPadden, Alisla Foley";
 $default_description = "Secure and user-friendly financial technology solutions for digital payments, budgeting, account management, and financial education.";
-$default_keywords = "UPDATE COMPANY NAME, FinTech, financial technology, digital payments, online payments, personal finance, budgeting tools, money management, account management, financial education, financial security";
+$default_keywords = "Finova, FinTech, financial technology, digital payments, online payments, personal finance, budgeting tools, money management, account management, financial education, financial security";
 
 
 $title = $page_title ?? $site_name;

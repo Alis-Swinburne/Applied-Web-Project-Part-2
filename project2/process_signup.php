@@ -15,7 +15,20 @@ if (!$conn) {
     exit();
 }
 
-require_once 'includes/database_setup.inc';
+$sql = "CREATE TABLE IF NOT EXISTS `user` (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(128) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL)";
+
+if (!mysqli_query($conn, $sql)) {
+    error_log("User table setup failed: ". mysqli_error($conn));
+    die("Database setup failed: ". mysqli_error($conn));
+}
+else {
+    // insert admin user automatically as first entry in db
+    $sql = "INSERT INTO user (username, password) VALUES ('admin', 'admin')";
+    mysqli_query($conn, $sql);
+}
 
 // Helps with preventing SQL injection through character encoding
 mysqli_set_charset($conn, 'utf8mb4');
@@ -58,6 +71,47 @@ if (!$stmt) {
 mysqli_stmt_bind_param($stmt, 'ss', $username, $password_hash);
 
 if (mysqli_stmt_execute($stmt)) {
+    $user_id = mysqli_insert_id($conn);
+    mysqli_stmt_close($stmt);
+
+    $sql = "CREATE TABLE IF NOT EXISTS `user_profile` (
+            `id` INT PRIMARY KEY,
+            `first_name` varchar(20) DEFAULT NULL,
+            `last_name` varchar(20) DEFAULT NULL,
+            `dob` char(10) DEFAULT NULL,
+            `gender` enum('female','male','nonbinary','prefernot') DEFAULT NULL,
+            `street` varchar(40) DEFAULT NULL,
+            `suburb` varchar(40) DEFAULT NULL,
+            `state` enum('vic','nsw','qld','nt','wa','sa','tas','act') DEFAULT NULL,
+            `postcode` char(4) DEFAULT NULL,
+            `email` varchar(254) DEFAULT NULL,
+            `phone` varchar(12) DEFAULT NULL,
+            `skills` text DEFAULT NULL,
+            `other_skills` text DEFAULT NULL,
+            CONSTRAINT `fk_profile_user`
+            FOREIGN KEY (`id`) REFERENCES `user`(`id`)) ENGINE=InnoDB";
+
+    if (!mysqli_query($conn, $sql)) {
+        error_log("User table setup failed: ". mysqli_error($conn));
+        die("Database setup failed: ". mysqli_error($conn));
+        mysqli_close($conn);
+        header('Location: signup.php');
+        exit();
+    }
+
+    $stmt = mysqli_prepare($conn, "INSERT INTO user_profile (id) VALUES (?)");
+
+    mysqli_stmt_bind_param($stmt, 'i', $user_id);
+
+    if (!mysqli_stmt_execute($stmt)) {
+        error_log("Profile creation failed: " . mysqli_stmt_error($stmt));
+        mysqli_stmt_close($stmt);
+        mysqli_close($conn);
+        $_SESSION['signup_error'] = "Signup failed, please try again later.";
+        header('Location: signup.php');
+        exit();
+    }
+
     mysqli_stmt_close($stmt);
     mysqli_close($conn);
 
