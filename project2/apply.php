@@ -134,7 +134,6 @@ function escape_html($value) {
                     <select name="state" id="state" required="required">
                         <option value="">Please select</option>
                         <?php 
-                        if($profile !== null){
                             $states = [
                                 'vic' => 'VIC',
                                 'nsw' => 'NSW',
@@ -145,12 +144,10 @@ function escape_html($value) {
                                 'tas' => 'TAS',
                                 'act' => 'ACT'
                             ];
-
-                            foreach ($states as $value => $label) {
-                                $selected = ($profile['state'] === $value) ? 'selected' : '';
+                            foreach ($states as $value => $label) 
+                                { $selected = ($profile !== null && isset($profile['state']) && $profile['state'] === $value) ? 'selected' : '';
                                 echo '<option value="' . escape_html($value) . '" ' .$selected . '>' . escape_html($label) . '</option>';
                             }
-                        }
                         ?>
                     </select>
                 </div>
