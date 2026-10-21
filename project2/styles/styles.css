@@ -2,7 +2,7 @@
 filename: style.css
 authors: Juliette Grove, Ada Yong, Andrea McPadden, Alisla Foley
 created: 27/08/2026
-last modified: 21/10/2026
+last modified: 22/10/2026
 description: Stylesheet used for most PHP and HTML files, each file has its own heading below.
 */
 
@@ -557,12 +557,12 @@ footer {
 /* Required field markers */
 #job-form .required::after {
     content: " *";
-    color: red;
+    color: darkred;
     font-weight: bold;
 }
 
 .asterisk {
-    color: red;
+    color: darkred;
     font-weight: bold;
 }
 

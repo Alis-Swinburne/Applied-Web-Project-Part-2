@@ -128,51 +128,50 @@ if (!in_array($state, $valid_states, true)) $errors[] = "State must be selected"
 if (!preg_match("/^[0-9]{4}$/", $postcode)) {
     $errors[] = "Postcode must be 4 numerical characters";
 } else {
-    $postcode_int = $postcode;
     $valid_postcode = false;
 
     switch (($state)) {
         case 'nsw':
             $valid_postcode =
-                ($postcode_int >= 2000 && $postcode_int <= 2599) ||
-                ($postcode_int >= 2619 && $postcode_int <= 2899) ||
-                ($postcode_int >= 2921 && $postcode_int <= 2999);
+                ($postcode >= 2000 && $postcode <= 2599) ||
+                ($postcode >= 2619 && $postcode <= 2899) ||
+                ($postcode >= 2921 && $postcode <= 2999);
             break;
 
         case 'act':
             $valid_postcode =
-                ($postcode_int >= 2600 && $postcode_int <= 2618) ||
-                ($postcode_int >= 2900 && $postcode_int <= 2920);
+                ($postcode >= 2600 && $postcode <= 2618) ||
+                ($postcode >= 2900 && $postcode <= 2920);
             break;
 
         case 'vic':
             $valid_postcode =
-                ($postcode_int >= 3000 && $postcode_int <= 3996);
+                ($postcode >= 3000 && $postcode <= 3996);
             break;
 
         case 'qld':
             $valid_postcode =
-                ($postcode_int >= 4000 && $postcode_int <= 4999);
+                ($postcode >= 4000 && $postcode <= 4999);
             break;
 
         case 'sa':
             $valid_postcode =
-                ($postcode_int >= 5000 && $postcode_int <= 5799);
+                ($postcode >= 5000 && $postcode <= 5799);
             break;
 
         case 'wa':
             $valid_postcode =
-                ($postcode_int >= 6000 && $postcode_int <= 6797);
+                ($postcode >= 6000 && $postcode <= 6797);
             break;
 
         case 'tas':
             $valid_postcode =
-                ($postcode_int >= 7000 && $postcode_int <= 7799);
+                ($postcode >= 7000 && $postcode <= 7799);
             break;
 
         case 'nt':
             $valid_postcode =
-                ($postcode_int >= 800 && $postcode_int <= 899);
+                ($postcode >= 800 && $postcode <= 899);
             break;
     }
 
