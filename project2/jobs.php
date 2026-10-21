@@ -2,6 +2,60 @@
 $page_title = "Jobs";
 include 'includes/header.inc';
 include 'includes/navigation.inc';
+
+// Database connection details. Copy these from the file that already connects
+// to your database (e.g. settings.php or login.php) if they differ.
+$db_host = "localhost";
+$db_user = "root";
+$db_pass = "";
+$db_name = "finova_db";   
+
+mysqli_report(MYSQLI_REPORT_OFF);  // stops harmless errors (like the setup file's duplicate INSERTs) crashing the page
+$conn = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
+if (!$conn) {
+    die("<p>Database connection failed: " . htmlspecialchars(mysqli_connect_error()) . "</p>");
+}
+mysqli_set_charset($conn, "utf8mb4");
+
+// database_setup.inc must be included AFTER $conn exists (it creates the tables if missing)
+require_once 'includes/database_setup.inc';
+
+$table = "Jobs";   // matches the table created in database_setup.inc
+
+// Show salary nicely if it's a number, otherwise print it as stored
+function format_salary($value) {
+    $clean = str_replace([',', '$'], '', (string)$value);
+    if (is_numeric($clean)) {
+        return '$' . number_format((float)$clean) . ' per annum + Super';
+    }
+    return htmlspecialchars($value);
+}
+
+// Turn a newline-separated column into an array of non-empty lines
+function split_lines($text) {
+    return array_filter(array_map('trim', explode("\n", (string)$text)), 'strlen');
+}
+
+// Read the search term from the URL (?q=...)
+$search = isset($_GET['q']) ? trim($_GET['q']) : '';
+
+if ($search !== '') {
+    $like = '%' . $search . '%';
+    $stmt = $conn->prepare(
+        "SELECT * FROM `$table`
+         WHERE Job_Title LIKE ? OR Job_Code LIKE ? OR Description LIKE ?
+         ORDER BY Job_Title"
+    );
+    $stmt->bind_param("sss", $like, $like, $like);
+} else {
+    $stmt = $conn->prepare("SELECT * FROM `$table` ORDER BY Job_Title");
+}
+if (!$stmt) {
+    die("<p>Query failed: " . htmlspecialchars($conn->error) . "</p>");
+}
+$stmt->execute();
+$jobs = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+$stmt->close();
 ?>
 
 <main>
@@ -20,140 +74,103 @@ include 'includes/navigation.inc';
             </ul>
         </aside>
 
+        <form class="job-search" action="jobs.php" method="get">
+            <label for="q">Search jobs:</label>
+            <input type="search" id="q" name="q" placeholder="Title, keyword or job code"
+                   value="<?php echo htmlspecialchars($search); ?>">
+            <button type="submit">Search</button>
+            <?php if ($search !== ''): ?>
+                <a href="jobs.php">Clear</a>
+            <?php endif; ?>
+        </form>
+
         <!-- Quick Navigation Directory -->
         <section class="job-directory">
             <h3>Open Positions Overview</h3>
-            <p>Click on a job title below to jump directly to the position details:</p>
-            <ul>
-                <li><a href="#DEV042">Senior Full Stack Developer (Ref: DEV042)</a></li>
-                <li><a href="#SEC918">Cybersecurity Analyst (Ref: SEC918)</a></li>
-                <li><a href="#DAT551">Financial Data Analyst (Ref: DAT551)</a></li>
-            </ul>
+
+            <?php if ($search !== ''): ?>
+                <p><?php echo count($jobs); ?> result(s) for &ldquo;<?php echo htmlspecialchars($search); ?>&rdquo;</p>
+            <?php endif; ?>
+
+            <?php if (count($jobs) > 0): ?>
+                <p>Click on a job title below to jump directly to the position details:</p>
+                <ul>
+                    <?php foreach ($jobs as $job): ?>
+                        <li><a href="#<?php echo htmlspecialchars($job['Job_Code']); ?>">
+                            <?php echo htmlspecialchars($job['Job_Title']); ?>
+                            (Ref: <?php echo htmlspecialchars($job['Job_Code']); ?>)</a></li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
         </section>
     </section>
 
-    <article class="job-card" id="DEV042">
+    <?php if (count($jobs) === 0): ?>
+        <p class="no-results">No positions matched your search. <a href="jobs.php">View all positions</a></p>
+    <?php endif; ?>
+
+    <?php foreach ($jobs as $job): 
+        $code = htmlspecialchars($job['Job_Code']);
+        // Optional columns; blank if they don't exist
+        $reporting   = $job['Reporting_Line'] ?? '';
+        $resp        = split_lines($job['Responsibilities'] ?? '');
+        $essential   = split_lines($job['Essential_Requirements'] ?? '');
+        $preferable  = split_lines($job['Preferable_Requirements'] ?? '');
+    ?>
+    <article class="job-card" id="<?php echo $code; ?>">
         <header>
-            <h3>Senior Full Stack Developer</h3>
-            <p><strong>Reference Number:</strong> DEV042</p>
-            <p><strong>Salary:</strong> $135,000 &ndash; $155,000 per annum + Super</p>
-            <p><strong>Reporting Line:</strong> Engineering Lead</p>
+            <h3><?php echo htmlspecialchars($job['Job_Title']); ?></h3>
+            <p><strong>Reference Number:</strong> <?php echo $code; ?></p>
+            <p><strong>Salary:</strong> <?php echo format_salary($job['Salary']); ?></p>
+            <?php if ($reporting !== ''): ?>
+                <p><strong>Reporting Line:</strong> <?php echo htmlspecialchars($reporting); ?></p>
+            <?php endif; ?>
+            <p><strong>Minimum Experience:</strong> <?php echo htmlspecialchars($job['Min_Experience']); ?><sup>+</sup> years</p>
         </header>
 
-        <p>We are seeking an experienced Full Stack Developer to lead the engineering of our core web applications, ensuring high scalability, performance, and security across all platforms</p>
+        <p><?php echo nl2br(htmlspecialchars($job['Description'])); ?></p>
 
+        <?php if ($resp): ?>
         <section>
             <h4>Key Responsibilities</h4>
             <ul>
-                <li>Architect, build, and maintain robust client-side and server-side applications.</li>
-                <li>Collaborate with UI/UX designers to implement modern, responsive interfaces.</li>
-                <li>Integrate secure third-party financial and payment gateway APIs.</li>
-                <li>Conduct code reviews, continuous integration, and mentor software developers.</li>
+                <?php foreach ($resp as $item): ?>
+                    <li><?php echo htmlspecialchars($item); ?></li>
+                <?php endforeach; ?>
             </ul>
         </section>
+        <?php endif; ?>
 
+        <?php if ($essential || $preferable): ?>
         <section>
             <h4>Requirements</h4>
-            <h5>Essential Requirements</h5>
-            <ol>
-                <li>5<sup>+</sup> years of experience with HTML5, CSS3, JavaScript, and REST APIs.</li>
-                <li>Demonstrated expertise in web application security standards.</li>
-                <li>Strong working knowledge of relational and NoSQL databases.</li>
-            </ol>
+            <?php if ($essential): ?>
+                <h5>Essential Requirements</h5>
+                <ol>
+                    <?php foreach ($essential as $item): ?>
+                        <li><?php echo preg_replace('/(\d)\+/', '$1<sup>+</sup>', htmlspecialchars($item)); ?></li>
+                    <?php endforeach; ?>
+                </ol>
+            <?php endif; ?>
 
-            <h5>Preferable Requirements</h5>
-            <ul>
-                <li>Experience building applications within the FinTech or Banking sector.</li>
-                <li>Familiarity with cloud infrastructures and CI/CD pipelines.</li>
-            </ul>
+            <?php if ($preferable): ?>
+                <h5>Preferable Requirements</h5>
+                <ul>
+                    <?php foreach ($preferable as $item): ?>
+                        <li><?php echo htmlspecialchars($item); ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
         </section>
+        <?php endif; ?>
 
         <div class="apply-link-container">
-            <a href="apply.php?ref=DEV042" target="_self" class="apply-btn">Apply for this Position</a>
+            <a href="apply.php?ref=<?php echo urlencode($job['Job_Code']); ?>" target="_self" class="apply-btn">Apply for this Position</a>
         </div>
     </article>
-    
-    <article class="job-card" id="SEC918">
-        <header>
-            <h3>Cybersecurity Analyst</h3>
-            <p><strong>Reference Number:</strong> SEC918</p>
-            <p><strong>Salary:</strong> $115,000 &ndash; $130,000 per annum + Super</p>
-            <p><strong>Reporting Line:</strong> Chief Information Security Officer (CISO)</p>
-        </header>
-
-        <p>Protect our financial platform by continuously monitoring threats, assessing vulnerabilities, and enforcing security compliance across all operational systems.</p>
-
-        <section>
-            <h4>Key Responsibilities</h4>
-            <ul>
-                <li>Monitoring networks and systems for security breaches, intrusions, and anomalous activity.</li>
-                <li>Conduct routine vulnerability assessments and coordinate penetration testing.</li>
-                <li>Develop, maintain, and execute comprehensive incident response procedures.</li>
-                <li>Ensure platform adherence to security frameworks like PCI-DSS.</li>
-            </ul>
-        </section>
-
-        <section>
-            <h4>Requirements</h4>
-            <h5>Essential Requirements</h5>
-            <ol>
-                <li>3<sup>+</sup> years in a specialized Information Security or Security Operations role.</li>
-                <li>Strong understanding of cryptographic protocols, network protocols, and firewalls.</li>
-                <li>Relevant security certification (e.g., CISSP, CISM, or CompTIA Security+).</li>
-            </ol>
-
-            <h5>Preferable Requirements</h5>
-            <ul>
-                <li>Degree in Cybersecurity, Computer Science, or Information Technology.</li>
-                <li>Hands-on experience with SIEM tools and threat monitoring tools</li>
-            </ul>
-        </section>
-
-        <div class="apply-link-container">
-            <a href="apply.php?ref=SEC918" target="_self" class="apply-btn">Apply for this Position</a>
-        </div>
-    </article>
-
-    <article class="job-card" id="DAT551">
-        <header>
-            <h3>Financial Data Analyst</h3>
-            <p><strong>Reference Number:</strong> DAT551</p>
-            <p><strong>Salary:</strong> $95,000 &ndash; $110,000 per annum + Super</p>
-            <p><strong>Reporting Line:</strong> Analytics Manager</p>
-        </header>
-
-        <p>Translate customer transaction data and financial trends into actionable business insights and drive product strategies, fraud prevention models, and user engagement.</p>
-
-        <section>
-            <h4>Key Responsibilities</h4>
-            <ul>
-                <li>Extract, transform, and analyze complex datasets to identify spending behavior patterns.</li>
-                <li>Design interactive data dashboards and reporting systems for executive stakeholders.</li>
-                <li>Partner with product teams to validate hypotheses using A/B testing methodologies.</li>
-                <li>Assist risk management teams with fraud detection trend analysis.</li>
-            </ul>
-        </section>
-
-        <section>
-            <h4>Requirements</h4>
-            <h5>Essential Requirements</h5>
-            <ol>
-                <li>2<sup>+</sup> years of experience in Data Analytics or Business Intelligence.</li>
-                <li>Advanced proficiency with SQL and statistical tools.</li>
-                <li>Solid foundation in statistical analysis and predictive modeling techniques.</li>
-            </ol>
-
-            <h5>Preferable Requirements</h5>
-            <ul>
-                <li>Background in quantitative finance of consumer lending metrics.</li>
-                <li>Familiarity with automated data pipeline technologies.</li>
-            </ul>
-        </section>
-
-        <div class="apply-link-container">
-            <a href="apply.php?ref=DAT551" target="_self" class="apply-btn">Apply for this Position</a>
-        </div>
-    </article>
+    <?php endforeach; ?>
 </main>
 
-<?php require_once 'includes/footer.inc' ?>
+<?php 
+require_once 'includes/footer.inc'; 
+?>
