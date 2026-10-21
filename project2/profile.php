@@ -48,7 +48,8 @@ if (!mysqli_query($conn, $sql)) {
 $profile_id = filter_var($_SESSION['user_id'] ?? null, FILTER_VALIDATE_INT);
 
 if (!$profile_id) {
-    die("Could not find profile id.");
+    header('Location: index.php');
+    exit();
 }
 
 $sql = "SELECT * FROM user_profile WHERE id = ?";
@@ -63,7 +64,8 @@ $profile = mysqli_fetch_assoc($result);
 mysqli_stmt_close($stmt);
 
 if (!$profile) {
-    die("Could not find profile.");
+    header('Location: index.php');
+    exit();
 }
 
 $selected_skills = array_filter(array_map('trim', explode(',', $profile['skills'])));
