@@ -2,7 +2,7 @@
 filename: style.css
 authors: Juliette Grove, Ada Yong, Andrea McPadden, Alisla Foley
 created: 27/08/2026
-last modified: 13/10/2026
+last modified: 21/10/2026
 description: Stylesheet used for most PHP and HTML files, each file has its own heading below.
 */
 
@@ -114,6 +114,10 @@ figure.section-right {
 a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
     outline: 3px solid var(--green);
     outline-offset: 2px;
+}
+
+.text-center{
+    text-align: center;
 }
 
 
@@ -550,6 +554,18 @@ footer {
     font-weight: bold;
 }
 
+/* Required field markers */
+#job-form .required::after {
+    content: " *";
+    color: red;
+    font-weight: bold;
+}
+
+.asterisk {
+    color: red;
+    font-weight: bold;
+}
+
 #job-form input, #job-form select, #job-form textarea,
 #profile-form input, #profile-form select, #profile-form textarea, #profile-form button, #delete-form button {
     padding: 0.75rem;
@@ -621,7 +637,7 @@ footer {
 }
 
 #job-form input[type="submit"], #profile-form input[type="submit"] {
-    background-color: var(--green-light);
+    background-color: var(--green);
     color:white;
 }
  

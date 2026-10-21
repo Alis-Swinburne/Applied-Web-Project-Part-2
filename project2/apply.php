@@ -43,18 +43,17 @@ function escape_html($value) {
 
 <main>
 
-    <!-- Inline CSS -->
-    <h2 style="text-align: center; font-size: 3rem; margin-bottom: 0">Job Application Form</h2>
-    <p style="text-align: center;">Please fill all required fields to submit your application</p>
+    <h1 class="text-center">Job Application Form</h1>
+    <p class="text-center">Please fill in all required fields marked with an asterisk <span class="asterisk">*</span> to submit your application</p>
 
     <form method="post" action="process_eoi.php" id="job-form" novalidate="novalidate">
 
         <!-- Job reference number -->
         <fieldset>
             <legend>Position</legend>
-            <label for="jobreference">Job Reference Number</label>
+            <label for="jobreference" class="required">Job Reference Number</label>
             <input type="text" id="jobreference" name="jobreference" required="required" placeholder="e.g. ABC123"
-            pattern="^[a-zA-Z0-9]{6}$" maxlength="6"> <!-- Exactly 6 alphanumeric characters -->
+            pattern="^[a-zA-Z0-9]{6}$" maxlength="6"  value="<?= htmlspecialchars($_GET['ref'] ?? '') ?>"> <!-- Exactly 6 alphanumeric characters -->
         </fieldset>
 
         <!-- Personal information - first name, last name, birthday, gender -->
@@ -64,21 +63,21 @@ function escape_html($value) {
             <!-- First Name -->
             <div class="form-row">
                 <div class="form-field">
-                    <label for="firstname">First Name</label>
+                    <label for="firstname" class="required">First Name</label>
                     <input type="text" id="firstname" name="firstname" required="required"
                     pattern="^[a-zA-Z]{1,20}$" maxlength="20" value="<?php if($profile !== null){ echo escape_html($profile['first_name']); } ?>"> <!-- Maximum 20 alphabetic characters -->
                 </div>
 
                 <!-- Last Name -->
                 <div class="form-field">
-                    <label for="lastname">Last Name</label>
+                    <label for="lastname" class="required">Last Name</label>
                     <input type="text" id="lastname" name="lastname" required="required"
                     pattern="^[a-zA-Z]{1,20}$" maxlength="20" value="<?php  if($profile !== null){ echo escape_html($profile['last_name']); } ?>"> <!-- Maximum 20 alphabetic characters -->
                 </div>
             </div>
 
                 <!-- Date of Birth -->
-                <label for="dob">Date of Birth</label>
+                <label for="dob" class="required">Date of Birth</label>
                 <input type="text" id="dob" name="dob" required="required" placeholder="DD/MM/YYYY"
                 pattern="^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/[0-9]{4}$" value="<?php  if($profile !== null){ echo escape_html($profile['dob']); } ?>"> <!-- dd/mm/yyyy -->
         </fieldset>
@@ -86,7 +85,7 @@ function escape_html($value) {
 
             <!-- Gender -->
             <fieldset>
-                <legend>Gender</legend>
+                <legend class="required">Gender</legend>
                     <div class="radio-checkbox">
                         <label>
                             <input type="radio" name="gender" id="female" value="female" required="required" <?php if($profile !== null){ echo $profile['gender'] === 'female' ? 'checked' : ''; } ?>>
@@ -115,14 +114,14 @@ function escape_html($value) {
             <legend>Address</legend>
 
             <!-- Street Address -->
-            <label for="streetaddress">Street Address</label>
+            <label for="streetaddress" class="required">Street Address</label>
             <input type="text" id="streetaddress" name="streetaddress" required="required"
             maxlength="40" value="<?php if($profile !== null){ echo escape_html($profile['street']); } ?>"> <!-- Maximum 40 characters -->
 
             <!-- Suburb / Town -->
             <div class="form-row-three">
                 <div class="form-field">
-                    <label for="suburb">Suburb / Town</label>
+                    <label for="suburb" class="required">Suburb / Town</label>
                     <input type="text" id="suburb" name="suburb"  required="required"
                     maxlength="40" value="<?php if($profile !== null){ echo escape_html($profile['suburb']); } ?>"> <!-- Maximum 40 characters -->
                 </div>
@@ -130,7 +129,7 @@ function escape_html($value) {
 
                 <!-- State -->
                 <div class="form-field">
-                    <label for="state">State</label>
+                    <label for="state" class="required">State</label>
                     <select name="state" id="state" required="required">
                         <option value="">Please select</option>
                         <?php 
@@ -154,7 +153,7 @@ function escape_html($value) {
 
                 <!-- Postcode -->
                 <div class="form-field">
-                    <label for="postcode">Postcode</label>
+                    <label for="postcode" class="required">Postcode</label>
                     <input type="text" id="postcode" name="postcode" required="required" 
                     pattern="^[0-9]{4}$" maxlength="4" value="<?php if($profile !== null){ echo escape_html($profile['postcode']); } ?>"> <!-- Exactly 4 digits -->
                 </div>
@@ -166,18 +165,18 @@ function escape_html($value) {
             <legend>Contact Details</legend>
 
             <!-- Email -->
-            <label for="email">Email</label>
+            <label for="email" class="required">Email</label>
             <input type="email" name="email" id="email" required="required" placeholder="example@email.com" value="<?php if($profile !== null){ echo escape_html($profile['email']); } ?>"> <!-- Valid email format -->
 
             <!-- Phone number -->
-            <label for="phone">Phone Number</label>
+            <label for="phone" class="required">Phone Number</label>
             <input type="text" name="phone" id="phone" required="required"
             pattern="^[0-9]{8,12}$" maxlength="12" value="<?php if($profile !== null){ echo escape_html($profile['phone']); } ?>"> <!-- 8–12 digits -->
             </fieldset>
 
             <!-- Skills -->
             <fieldset>
-            <legend>Professional Skills</legend>
+            <legend class="required">Professional Skills</legend>
 
                 <!-- Skills list -->
             <div class="radio-checkbox">
