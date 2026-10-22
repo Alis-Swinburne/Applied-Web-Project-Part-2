@@ -79,7 +79,7 @@ function escape_html($value) {
                 <!-- Date of Birth -->
                 <label for="dob" class="required">Date of Birth</label>
                 <input type="text" id="dob" name="dob" required="required" placeholder="DD/MM/YYYY"
-                pattern="^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/[0-9]{4}$" value="<?php  if($profile !== null){ echo escape_html($profile['dob']); } ?>"> <!-- dd/mm/yyyy -->
+                pattern="^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/[0-9]{4}$" value="<?php  if($profile !== null){ echo escape_html(date('d/m/Y', strtotime($profile['dob']))); } ?>"> <!-- dd/mm/yyyy -->
         </fieldset>
 
 

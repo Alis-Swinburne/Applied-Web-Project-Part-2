@@ -15,19 +15,30 @@ if (!$conn) {
     exit();
 }
 
-$sql = "CREATE TABLE IF NOT EXISTS `user` (
+$result = mysqli_query($conn, "SHOW TABLES LIKE 'user'");
+$table_exists = mysqli_num_rows($result) > 0;
+
+if (!$table_exists) {
+    $sql = "CREATE TABLE IF NOT EXISTS `user` (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(128) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL)";
 
-if (!mysqli_query($conn, $sql)) {
-    error_log("User table setup failed: ". mysqli_error($conn));
-    die("Database setup failed: ". mysqli_error($conn));
-}
-else {
+    if (!mysqli_query($conn, $sql)) {
+        error_log("User table setup failed: ". mysqli_error($conn));
+        die("Database setup failed: ". mysqli_error($conn));
+    }
+
     // insert admin user automatically as first entry in db
-    $sql = "INSERT INTO user (username, password) VALUES ('admin', 'admin')";
-    mysqli_query($conn, $sql);
+    $admin_username = 'admin';
+    $admin_password = password_hash('admin', PASSWORD_DEFAULT); // Fixed: now correctly hashed before being inserted
+    $stmt = mysqli_prepare($conn, "INSERT INTO `user` (username, password) values (?, ?)");
+    mysqli_stmt_bind_param($stmt, "ss", $admin_username, $admin_password);
+    
+    if (!mysqli_stmt_execute($stmt)) {
+        error_log("Could not insert admin: ". mysqli_stmt_error($stmt));
+    }
+    mysqli_stmt_close($stmt);
 }
 
 // Helps with preventing SQL injection through character encoding
@@ -75,10 +86,10 @@ if (mysqli_stmt_execute($stmt)) {
     mysqli_stmt_close($stmt);
 
     $sql = "CREATE TABLE IF NOT EXISTS `user_profile` (
-            `id` INT PRIMARY KEY,
+            `id` INT UNSIGNED NOT NULL PRIMARY KEY,
             `first_name` varchar(20) DEFAULT NULL,
             `last_name` varchar(20) DEFAULT NULL,
-            `dob` char(10) DEFAULT NULL,
+            `dob` DATE DEFAULT NULL,
             `gender` enum('female','male','nonbinary','prefernot') DEFAULT NULL,
             `street` varchar(40) DEFAULT NULL,
             `suburb` varchar(40) DEFAULT NULL,
@@ -100,7 +111,6 @@ if (mysqli_stmt_execute($stmt)) {
     }
 
     $stmt = mysqli_prepare($conn, "INSERT INTO user_profile (id) VALUES (?)");
-
     mysqli_stmt_bind_param($stmt, 'i', $user_id);
 
     if (!mysqli_stmt_execute($stmt)) {

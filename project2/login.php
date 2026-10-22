@@ -13,19 +13,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    $sql = "CREATE TABLE IF NOT EXISTS `user` (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(128) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL)";
+    $result = mysqli_query($conn, "SHOW TABLES LIKE 'user'");
+    $table_exists = mysqli_num_rows($result) > 0;
 
-    if (!mysqli_query($conn, $sql)) {
-        error_log("User table setup failed: ". mysqli_error($conn));
-        die("Database setup failed: ". mysqli_error($conn));
-    }
-    else {
+    if (!$table_exists) {
+        $sql = "CREATE TABLE IF NOT EXISTS `user` (
+        id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        username VARCHAR(128) NOT NULL UNIQUE,
+        password VARCHAR(255) NOT NULL)";
+
+        if (!mysqli_query($conn, $sql)) {
+            error_log("User table setup failed: ". mysqli_error($conn));
+            die("Database setup failed: ". mysqli_error($conn));
+        }
+
         // insert admin user automatically as first entry in db
-        $sql = "INSERT INTO user (username, password) VALUES ('admin', 'admin')";
-        mysqli_query($conn, $sql);
+        $admin_username = 'admin';
+        $admin_password = password_hash('admin', PASSWORD_DEFAULT); // Fixed: now correctly hashed before being inserted
+        $stmt = mysqli_prepare($conn, "INSERT INTO `user` (username, password) values (?, ?)");
+        mysqli_stmt_bind_param($stmt, "ss", $admin_username, $admin_password);
+        
+        if (!mysqli_stmt_execute($stmt)) {
+            error_log("Could not insert admin: ". mysqli_stmt_error($stmt));
+        }
+        mysqli_stmt_close($stmt);
     }
 
     mysqli_set_charset($conn, 'utf8mb4');
@@ -65,7 +76,7 @@ include 'includes/navigation.inc';
     
 <main class="authentication-main">
     <section class="authentication-popup">
-        <h2>Welcome back!</h2>
+        <h1>Welcome back!</h1>
         <p class="authentication-description">Log in to your account to continue</p>
 
         <?php if ($signup_success): ?>
