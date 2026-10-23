@@ -105,7 +105,7 @@ if (!preg_match("/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/[0-9]{4}$/", $dob)
             $errors[] = "Applicants must be between 18 and 80 years old";
         } else {
             // Convert to SQL date format
-            $dob = $date->format('d/m/Y');
+            $dob = $date->format('Y/m/d');
         }
     }
 }
@@ -115,7 +115,7 @@ $valid_genders = ['female', 'male', 'nonbinary', 'prefernot'];
 if (!in_array($gender, $valid_genders, true)) $errors[] = "Gender must be selected";
 
 // Street address - Maximum 40 characters
-if (strlen($street) <= 0 || strlen($street) > 40) $errors[] = "Street addresss must be 1-40 characters";
+if (strlen($street) <= 0 || strlen($street) > 40) $errors[] = "Street address must be 1-40 characters";
 
 // Suburb - Maximum 40 characters
 if (strlen($suburb) <= 0 || strlen($suburb) > 40) $errors[] = "Suburb must be 1-40 characters";
@@ -200,27 +200,39 @@ if (empty($errors)) {
     mysqli_stmt_close($check_stmt);
 }
 
+// If there are errors, display error message
 if (!empty($errors)) {
+    echo "<div class='margin'>";
     echo "<h1>We couldn't submit your application</h1>";
     echo "<h2>Please fix the following and try again: </h2>";
     foreach ($errors as $error) {
-        echo "<p>$error</p>";
+        echo "<p>- $error</p>";
         }
-} else {
+    echo "<div class='button-container'>";
+    echo "<a href='apply.php' class='back-button'>Back to Apply</a>";
+    echo "</div>";
+    echo "</div>";
+} else { // If no errors, prepare sql insert statement, ? are placeholders
     $stmt = mysqli_prepare($conn, "INSERT INTO eoi (`job_ref`, `first_name`, `last_name`, `dob`, `gender`, `street`, `suburb`, `state`, `postcode`, `email`, `phone`, `skills`, `other_skills`) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
+    // Check if sql statement was prepared successfully, bind to placeholders as strings, protect against sql injection
     if ($stmt) {
         mysqli_stmt_bind_param(
         $stmt, "sssssssssssss", $job_ref, $first_name, $last_name, $dob, $gender, $street, $suburb, $state, $postcode, $email, $phone, $skills, $other_skills);
     
-
+        // If successful, display success message, else error
         if (mysqli_stmt_execute($stmt)) {
             $eoi_number = mysqli_insert_id($conn);
+            echo "<div class='margin'>";
             echo "<h1>Your application has been submitted</h1>";
-            echo "<p>Thank you, " . htmlspecialchars($first_name) . " " . htmlspecialchars($last_name) . ", for your application.</p>";
-            echo "<p> We have successfully received your interest for " . htmlspecialchars($job_ref) . " and will contact you soon!</p>";
-            echo "<p>Your EOI number is " . htmlspecialchars($eoi_number) . "</p>";
+            echo "<p>Thank you, <strong>" . htmlspecialchars($first_name) . " " . htmlspecialchars($last_name) . "</strong>, for your application.</p>";
+            echo "<p> We have successfully received your interest for <strong>" . htmlspecialchars($job_ref) . "</strong> and will contact you soon!</p>";
+            echo "<p>Your EOI number is <strong>" . htmlspecialchars($eoi_number) . "</strong></p>";
+            echo "<div class='button-container'>";
+            echo "<a href='index.php' class='back-button'>Back to Home</a>";
+            echo "</div>";
+            echo "</div>";
         }else{
             echo "<p>Unable to submit your application. Please try again later</p>";
         }
