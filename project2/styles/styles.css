@@ -2,7 +2,7 @@
 filename: style.css
 authors: Juliette Grove, Ada Yong, Andrea McPadden, Alisla Foley
 created: 27/08/2026
-last modified: 22/10/2026
+last modified: 23/10/2026
 description: Stylesheet used for most PHP and HTML files, each file has its own heading below.
 */
 
@@ -116,10 +116,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
     outline-offset: 2px;
 }
 
-.text-center{
+.text-center {
     text-align: center;
 }
 
+.margin {
+    margin: auto;
+    margin-top: 0;
+}
 
 /* Header Section */
 /* global across all pages, e.g. navigation bar, logo, title */
@@ -686,7 +690,26 @@ footer {
     box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px;
 }
 
+.button-container {
+    display: flex;
+    justify-content: center; 
+    width: 100%;            
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;        
+}
 
+.back-button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--green);
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+    border-radius: 6px;}
+
+.back-button:hover {
+    background-color: var(--green-dark);
+}
 
 /* about.php Section */
 /* About page only styling, e.g. the group photo */
