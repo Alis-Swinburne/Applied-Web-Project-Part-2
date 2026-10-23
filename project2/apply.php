@@ -16,20 +16,22 @@ if (!$conn) {
 $profile_id = filter_var($_SESSION['user_id'] ?? null, FILTER_VALIDATE_INT);
 $profile = null;
 
-if ($profile_id) {
+if ($profile_id !== false && $profile_id !== null) {
     $sql = "SELECT * FROM user_profile WHERE id = ?";
     $stmt = mysqli_prepare($conn, $sql);
 
-    mysqli_stmt_bind_param($stmt, "i", $profile_id);
-    mysqli_stmt_execute($stmt);
+    if ($stmt) {
+        mysqli_stmt_bind_param($stmt, "i", $profile_id);
+        mysqli_stmt_execute($stmt);
 
-    $result = mysqli_stmt_get_result($stmt);
-    $profile = mysqli_fetch_assoc($result);
+        $result = mysqli_stmt_get_result($stmt);
+        $profile = mysqli_fetch_assoc($result);
 
-    mysqli_stmt_close($stmt);
+        mysqli_stmt_close($stmt);
 
-    if ($profile) {
-        $selected_skills = array_filter(array_map('trim', explode(',', $profile['skills'])));
+        if ($profile) {
+            $selected_skills = array_filter(array_map('trim', explode(',', $profile['skills'])));
+        }
     }
 }
 
