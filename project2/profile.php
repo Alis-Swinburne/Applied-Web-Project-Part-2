@@ -114,7 +114,7 @@ function escape_html($value) {
             <label for="dob">Date of Birth</label>
             <input type="text" id="dob" name="dob" required placeholder="DD/MM/YYYY" 
             pattern="(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/[0-9]{4}"
-            value="<?php echo escape_html(date('d/m/Y', strtotime($profile['dob']))); ?>">
+            value="<?php echo (!empty($profile['dob']) && $profile['dob'] !== '0000-00-00') ? escape_html(date('d/m/Y', strtotime($profile['dob']))) : ''; ?>">
             <p class="authentication-hint"><em>Must be between 18 and 80 years old.</em></p>
         </fieldset>
 
@@ -206,7 +206,7 @@ function escape_html($value) {
             <label for="phone">Phone Number</label>
             <input type="text" name="phone" id="phone" required pattern="[0-9]{8,12}" maxlength="12"
             value="<?php echo escape_html($profile['phone']); ?>">
-            <p class="authentication-hint"><em>Must be between 1 and 12 numbers.</em></p>
+            <p class="authentication-hint"><em>Must be between 8 and 12 numbers.</em></p>
         </fieldset>
 
         <fieldset>

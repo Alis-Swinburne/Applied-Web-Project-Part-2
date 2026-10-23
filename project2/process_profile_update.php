@@ -150,7 +150,7 @@ if ($date < $min_dob || $date > $max_dob) {
     exit();
 }
 
-$dob = $date->format('d/m/Y');
+$dob = $date->format('Y/m/d');
 
 $skills = array_unique($skills);
 $skills_string = implode(', ', $skills);

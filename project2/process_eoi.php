@@ -105,7 +105,7 @@ if (!preg_match("/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/[0-9]{4}$/", $dob)
             $errors[] = "Applicants must be between 18 and 80 years old";
         } else {
             // Convert to SQL date format
-            $dob = $date->format('d/m/Y');
+            $dob = $date->format('Y/m/d');
         }
     }
 }
@@ -200,21 +200,23 @@ if (empty($errors)) {
     mysqli_stmt_close($check_stmt);
 }
 
+// If there are errors, display error message
 if (!empty($errors)) {
     echo "<h1>We couldn't submit your application</h1>";
     echo "<h2>Please fix the following and try again: </h2>";
     foreach ($errors as $error) {
         echo "<p>$error</p>";
         }
-} else {
+} else { // If no errors, prepare sql insert statement, ? are placeholders
     $stmt = mysqli_prepare($conn, "INSERT INTO eoi (`job_ref`, `first_name`, `last_name`, `dob`, `gender`, `street`, `suburb`, `state`, `postcode`, `email`, `phone`, `skills`, `other_skills`) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
+    // Check if sql statement was prepared successfully, bind to placeholders as strings, protect against sql injection
     if ($stmt) {
         mysqli_stmt_bind_param(
         $stmt, "sssssssssssss", $job_ref, $first_name, $last_name, $dob, $gender, $street, $suburb, $state, $postcode, $email, $phone, $skills, $other_skills);
     
-
+        // If successful, display success message, else error
         if (mysqli_stmt_execute($stmt)) {
             $eoi_number = mysqli_insert_id($conn);
             echo "<h1>Your application has been submitted</h1>";
