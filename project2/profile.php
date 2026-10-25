@@ -24,10 +24,10 @@ include 'includes/header.inc';
 include 'includes/navigation.inc';
 
 $sql = "CREATE TABLE IF NOT EXISTS `user_profile` (
-            `id` INT NOT NULL PRIMARY KEY,
+            `id` INT UNSIGNED NOT NULL PRIMARY KEY,
             `first_name` varchar(20) DEFAULT NULL,
             `last_name` varchar(20) DEFAULT NULL,
-            `dob` char(10) DEFAULT NULL,
+            `dob` DATE DEFAULT NULL,
             `gender` enum('female','male','nonbinary','prefernot') DEFAULT NULL,
             `street` varchar(40) DEFAULT NULL,
             `suburb` varchar(40) DEFAULT NULL,
@@ -48,8 +48,9 @@ if (!mysqli_query($conn, $sql)) {
 $profile_id = filter_var($_SESSION['user_id'] ?? null, FILTER_VALIDATE_INT);
 
 if (!$profile_id) {
-    header('Location: index.php');
-    exit();
+    die("Could not find profile ID.");
+    // header('Location: index.php');
+    // exit();
 }
 
 $sql = "SELECT * FROM user_profile WHERE id = ?";
@@ -64,8 +65,9 @@ $profile = mysqli_fetch_assoc($result);
 mysqli_stmt_close($stmt);
 
 if (!$profile) {
-    header('Location: index.php');
-    exit();
+    die("Could not find profile, ID: ". $profile_id);
+    // header('Location: index.php');
+    // exit();
 }
 
 $selected_skills = array_filter(array_map('trim', explode(',', $profile['skills'])));
@@ -112,7 +114,8 @@ function escape_html($value) {
             <label for="dob">Date of Birth</label>
             <input type="text" id="dob" name="dob" required placeholder="DD/MM/YYYY" 
             pattern="(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/[0-9]{4}"
-            value="<?php echo escape_html($profile['dob']); ?>">
+            value="<?php echo (!empty($profile['dob']) && $profile['dob'] !== '0000-00-00') ? escape_html(date('d/m/Y', strtotime($profile['dob']))) : ''; ?>">
+            <p class="authentication-hint"><em>Must be between 18 and 80 years old.</em></p>
         </fieldset>
 
         <fieldset>
@@ -188,7 +191,7 @@ function escape_html($value) {
                     <label for="postcode">Postcode</label>
                     <input type="text" id="postcode" name="postcode" required pattern="[0-9]{4}" maxlength="4" 
                     value="<?php echo escape_html($profile['postcode']); ?>">
-                    <p class="authentication-hint"><em>Must be between 1 and 4 numbers.</em></p>
+                    <p class="authentication-hint"><em>Must be a valid postcode for your state and between 1 and 4 numbers.</em></p>
                 </div>
             </div>
         </fieldset>
@@ -203,7 +206,7 @@ function escape_html($value) {
             <label for="phone">Phone Number</label>
             <input type="text" name="phone" id="phone" required pattern="[0-9]{8,12}" maxlength="12"
             value="<?php echo escape_html($profile['phone']); ?>">
-            <p class="authentication-hint"><em>Must be between 1 and 12 numbers.</em></p>
+            <p class="authentication-hint"><em>Must be between 8 and 12 numbers.</em></p>
         </fieldset>
 
         <fieldset>
@@ -241,8 +244,7 @@ function escape_html($value) {
             </div>
 
             <label for="otherskills">Other Skills</label>
-            <textarea name="otherskills" id="otherskills" rows="5" cols="40" placeholder="List any other relevant skills (optional)">
-            <?php echo escape_html($profile['other_skills']); ?></textarea>
+            <textarea name="otherskills" id="otherskills" rows="5" cols="40" placeholder="List any other relevant skills (optional)"><?php echo escape_html($profile['other_skills']); ?></textarea>
         </fieldset>
 
         <div class="input-buttons">

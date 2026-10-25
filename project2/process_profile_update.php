@@ -59,6 +59,65 @@ $valid = preg_match('/\A[a-zA-Z]{1,20}\z/', $first_name) && // First name matche
         is_string($other_skills) && // Submitted skills is string
         strlen($other_skills) <= 2000; // Skills length less than or equal to 2000
 
+$valid_postcode = false;
+
+// Took this from process_eoi.php!
+if (preg_match('/\A[0-9]{4}\z/', $postcode)) {
+    $postcode_number = (int) $postcode;
+
+    switch ($state) {
+        case 'nsw':
+            $valid_postcode =
+                ($postcode >= 2000 && $postcode <= 2599) ||
+                ($postcode >= 2619 && $postcode <= 2899) ||
+                ($postcode >= 2921 && $postcode <= 2999);
+            break;
+
+        case 'act':
+            $valid_postcode =
+                ($postcode >= 2600 && $postcode <= 2618) ||
+                ($postcode >= 2900 && $postcode <= 2920);
+            break;
+
+        case 'vic':
+            $valid_postcode =
+                ($postcode >= 3000 && $postcode <= 3996);
+            break;
+
+        case 'qld':
+            $valid_postcode =
+                ($postcode >= 4000 && $postcode <= 4999);
+            break;
+
+        case 'sa':
+            $valid_postcode =
+                ($postcode >= 5000 && $postcode <= 5799);
+            break;
+
+        case 'wa':
+            $valid_postcode =
+                ($postcode >= 6000 && $postcode <= 6797);
+            break;
+
+        case 'tas':
+            $valid_postcode =
+                ($postcode >= 7000 && $postcode <= 7799);
+            break;
+
+        case 'nt':
+            $valid_postcode =
+                ($postcode >= 800 && $postcode <= 899);
+            break;
+    }
+}
+
+if (!$valid_postcode) {
+    $_SESSION['profile_error'] = "Postcode does not match the selected state.";
+    mysqli_close($conn);
+    header('Location: profile.php');
+    exit();
+}
+
 if (!$valid) {
     $_SESSION['profile_error'] = "Invalid input, please check the information you entered matches the listed criteria.";
     mysqli_close($conn);
@@ -79,6 +138,19 @@ if (!$date || ($date_errors !== false &&
     header('Location: profile.php');
     exit();
 }
+
+$today = new DateTime('today');
+$min_dob = (clone $today)->modify('-80 years');
+$max_dob = (clone $today)->modify('-18 years');
+
+if ($date < $min_dob || $date > $max_dob) {
+    $_SESSION['profile_error'] = "You must be between 18 and 80 years old.";
+    mysqli_close($conn);
+    header('Location: profile.php');
+    exit();
+}
+
+$dob = $date->format('Y/m/d');
 
 $skills = array_unique($skills);
 $skills_string = implode(', ', $skills);

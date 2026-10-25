@@ -16,20 +16,22 @@ if (!$conn) {
 $profile_id = filter_var($_SESSION['user_id'] ?? null, FILTER_VALIDATE_INT);
 $profile = null;
 
-if ($profile_id) {
+if ($profile_id !== false && $profile_id !== null && $profile_id !== 1) {
     $sql = "SELECT * FROM user_profile WHERE id = ?";
     $stmt = mysqli_prepare($conn, $sql);
 
-    mysqli_stmt_bind_param($stmt, "i", $profile_id);
-    mysqli_stmt_execute($stmt);
+    if ($stmt) {
+        mysqli_stmt_bind_param($stmt, "i", $profile_id);
+        mysqli_stmt_execute($stmt);
 
-    $result = mysqli_stmt_get_result($stmt);
-    $profile = mysqli_fetch_assoc($result);
+        $result = mysqli_stmt_get_result($stmt);
+        $profile = mysqli_fetch_assoc($result);
 
-    mysqli_stmt_close($stmt);
+        mysqli_stmt_close($stmt);
 
-    if ($profile) {
-        $selected_skills = array_filter(array_map('trim', explode(',', $profile['skills'])));
+        if ($profile) {
+            $selected_skills = array_filter(array_map('trim', explode(',', $profile['skills'])));
+        }
     }
 }
 
@@ -79,7 +81,7 @@ function escape_html($value) {
                 <!-- Date of Birth -->
                 <label for="dob" class="required">Date of Birth</label>
                 <input type="text" id="dob" name="dob" required="required" placeholder="DD/MM/YYYY"
-                pattern="^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/[0-9]{4}$" value="<?php  if($profile !== null){ echo escape_html($profile['dob']); } ?>"> <!-- dd/mm/yyyy -->
+                pattern="^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/[0-9]{4}$" value="<?php echo (!empty($profile['dob']) && $profile['dob'] !== '0000-00-00') ? escape_html(date('d/m/Y', strtotime($profile['dob']))) : ''; ?>"> <!-- dd/mm/yyyy -->
         </fieldset>
 
 
