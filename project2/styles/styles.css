@@ -2,7 +2,7 @@
 filename: style.css
 authors: Juliette Grove, Ada Yong, Andrea McPadden, Alisla Foley
 created: 27/08/2026
-last modified: 23/10/2026
+last modified: 26/10/2026
 description: Stylesheet used for most PHP and HTML files, each file has its own heading below.
 */
 
@@ -18,6 +18,7 @@ description: Stylesheet used for most PHP and HTML files, each file has its own 
     --green: #577331; /* white text passes the accessibility test when on this colour */
     --green-light: #77a737; /* use this for decorations only, its too light for text (wont pass accessibility tests) */
     --green-dark: #194803;
+    --light-green-background: #fafcf7;
 }
 
 body {
@@ -439,8 +440,8 @@ footer {
 .job-directory {
     margin-top: 15px;
     padding: 15px 20px;
-    background-color: #f4fbfd; 
-    border-left: 4px solid #70b8c4; 
+    background-color: var(--light-green-background); 
+    border-left: 4px solid var(--green); 
     border-radius: 4px;
 }
 
@@ -463,7 +464,7 @@ footer {
 /* Fixed typo from .perks-sidepar to .perks-sidebar */
 .perks-sidebar {
     background-color: #ffffff; /* White Background */
-    border: 1px dashed #70b8c4; /* Dashed border for visual distinction */
+    border: 1px dashed var(--green-light); /* Dashed border for visual distinction */
     border-radius: 8px;
     padding: 20px;
     margin-bottom: 25px; /* Reduced from 35px since it's now inside the main box */
@@ -489,14 +490,14 @@ footer {
     background-color: #f8fafb; /* Light background for the header */
     padding: 15px 20px;
     margin: -30px -30px 20px -30px;
-    border-bottom: 2px solid #bee1e6; /* Subtle border to separate header from content */
+    border-bottom: 2px solid var(--green-light); /* Subtle border to separate header from content */
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
 }
 
 .job-card h3 {
     margin-top: 0;
-    color: #1a365d; /* Dark blue for the job title */
+    color: var(--green-dark); /* Dark blue for the job title */
     font-size: 1.5em;
 }
 
@@ -514,7 +515,7 @@ footer {
 
 .apply-btn {
     display: inline-block;
-    background-color: #3182ce; /* Blue background for the apply button */
+    background-color: var(--green); /* Blue background for the apply button */
     color: #ffffff; /* White text for contrast */
     padding: 10px 20px;
     text-decoration: none;
@@ -524,7 +525,7 @@ footer {
 }
 
 .apply-btn:hover {
-    background-color: #2b6cb0; /* Darker blue on hover for feedback */
+    background-color: var(--green-dark); /* Darker blue on hover for feedback */
 }
 
 /* apply.php and profile.php Section */
