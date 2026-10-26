@@ -750,6 +750,13 @@ footer {
     margin-bottom: 8px;
 }
 
+img.group_photo {
+    display: block;
+    width: 80%;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
 
 /* login.php, signup.php, and profile.php (some parts) section (use the same visuals) */
 .authentication-main {

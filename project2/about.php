@@ -92,8 +92,8 @@ while ($row = mysqli_fetch_assoc($result)) {
 
 <h2> Group Photo</h2>
 <figure>
-<img src="images/group_photo.jpeg" alt="Group Photo of Courageous Coders" width="600" height="400">
-<figcaption>The Courageous Coders in our Thursday tutorial.</figcaption>
+<img src="images/group_photo.jpg" alt="Group Photo of Courageous Coders" class="group_photo">
+<figcaption class="text-center">The Courageous Coders in our Thursday tutorial.</figcaption>
 </figure>
         
 <h2>Fun Facts About Our Team</h2>
