@@ -7,8 +7,10 @@ if (!$conn) {
     die("Unable to connect to database: " . mysqli_connect_error());
 }
 
-include 'includes/header.inc';
-include 'includes/navigation.inc';
+require_once '../settings.php';
+include '../includes/header.inc';
+include '../includes/navigation.inc';
+include '../includes/footer.inc';
 
 $create_table = "CREATE TABLE IF NOT EXISTS `about` (
     `student_id` CHAR(9) NOT NULL,
