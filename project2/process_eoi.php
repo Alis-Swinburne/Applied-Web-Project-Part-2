@@ -208,9 +208,11 @@ if (!empty($errors)) {
     echo "<div class='margin'>";
     echo "<h1>We couldn't submit your application</h1>";
     echo "<h2>Please fix the following and try again: </h2>";
+    echo "<ul>";
     foreach ($errors as $error) {
-        echo "<p>- $error</p>";
+        echo "<li>$error</li>";
         }
+    echo "</ul>";
     echo "<div class='button-container'>";
     echo "<a href='apply.php' class='back-button'>Back to Apply</a>";
     echo "</div>";
