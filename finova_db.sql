@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 26, 2026 at 04:40 AM
+-- Generation Time: Oct 26, 2026 at 12:52 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -26,25 +26,47 @@ USE `finova_db`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `about`
+-- Table structure for table `about_group`
 --
 
-DROP TABLE IF EXISTS `about`;
-CREATE TABLE `about` (
-  `student_id` char(9) NOT NULL,
+DROP TABLE IF EXISTS `about_group`;
+CREATE TABLE `about_group` (
+  `id` int(11) NOT NULL,
+  `group_name` varchar(255) NOT NULL,
+  `tutorial_class` varchar(255) DEFAULT NULL,
+  `photo_path` varchar(255) DEFAULT NULL,
+  `photo_caption` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `about_group`
+--
+
+INSERT INTO `about_group` (`id`, `group_name`, `tutorial_class`, `photo_path`, `photo_caption`) VALUES
+(1, 'Courageous Coders', 'Thursday 12:30-2:30 PM', 'images\\group_photo.jpg', 'The Courageous Coders in our Thursday tutorial.');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `about_members`
+--
+
+DROP TABLE IF EXISTS `about_members`;
+CREATE TABLE `about_members` (
+  `student_number` char(9) NOT NULL,
   `name` varchar(20) NOT NULL,
-  `part1_contribution` text NOT NULL,
-  `part2_contribution` text NOT NULL,
-  `original_quote` text NOT NULL,
-  `translated_quote` text NOT NULL,
+  `project1_contribution` text NOT NULL,
+  `project2_contribution` text NOT NULL,
+  `quote_original` text NOT NULL,
+  `quote_english` text NOT NULL,
   `fun_fact` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `about`
+-- Dumping data for table `about_members`
 --
 
-INSERT INTO `about` (`student_id`, `name`, `part1_contribution`, `part2_contribution`, `original_quote`, `translated_quote`, `fun_fact`) VALUES
+INSERT INTO `about_members` (`student_number`, `name`, `project1_contribution`, `project2_contribution`, `quote_original`, `quote_english`, `fun_fact`) VALUES
 ('106154958', 'Ada Yong', 'Shared responsibility: CSS File, About Page and individual responsibility: Apply page.', 'Shared responsibility: CSS File and individual responsibility: Apply page, Process EOI, EOI Table.', '\"船到桥头自然直\" - Chinese', '\"The boat will go straight when it reaches the bridge.\"', 'Has a favourite spoon'),
 ('106505815', 'Juliette Grove', 'Shared responsibility: CSS File, About Page and individual responsibility: About page.', 'Shared responsibility: CSS File and individual responsibility: About page, About table.', '\"Tutto scorre.\" – Italian', '\"Everything flows.\"', 'Has been to 10 countries'),
 ('106507921', 'Andrea McPadden', 'Shared responsibility: CSS File, About Page and individual responsibility: Jobs page.', 'Shared responsibility: CSS File and individual responsibility: Jobs page, Jobs Table, Manage page', '\"Цена — это то, что вы платите. Ценность — это то, что вы получаете.\" - Russian', '\"Price is what you pay. Value is what you get.\"', 'Has read 60 books this year.'),
@@ -163,10 +185,16 @@ CREATE TABLE `user_profile` (
 --
 
 --
--- Indexes for table `about`
+-- Indexes for table `about_group`
 --
-ALTER TABLE `about`
-  ADD PRIMARY KEY (`student_id`);
+ALTER TABLE `about_group`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `about_members`
+--
+ALTER TABLE `about_members`
+  ADD PRIMARY KEY (`student_number`);
 
 --
 -- Indexes for table `eoi`
@@ -199,6 +227,12 @@ ALTER TABLE `user_profile`
 --
 
 --
+-- AUTO_INCREMENT for table `about_group`
+--
+ALTER TABLE `about_group`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `eoi`
 --
 ALTER TABLE `eoi`
@@ -208,7 +242,7 @@ ALTER TABLE `eoi`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
