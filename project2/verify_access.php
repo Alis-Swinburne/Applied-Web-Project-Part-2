@@ -21,4 +21,3 @@ function verify_access(mysqli $conn): bool {
 
     return false;
 }
-?>
