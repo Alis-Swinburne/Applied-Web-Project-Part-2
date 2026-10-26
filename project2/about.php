@@ -2,7 +2,6 @@
 $page_title = "About";
 include 'includes/header.inc';
 include 'includes/navigation.inc';
-include 'includes/db_connect.inc'; // 
 
 // --- GET GROUP INFO ---
 $group_sql = "SELECT * FROM about_group LIMIT 1";
