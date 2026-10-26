@@ -36,9 +36,9 @@ $members = ($members_result) ? mysqli_fetch_all($members_result, MYSQLI_ASSOC) :
                 <?php echo htmlspecialchars($member['name'], ENT_QUOTES, 'UTF-8'); ?>
             </dt>
             <dd>
-                Shared responsibility: CSS File, About Page<br>
-    Individual responsibility: <?php echo htmlspecialchars($member['project1_contribution'], ENT_QUOTES, 'UTF-8'); ?>
-    Individual responsibility: <?php echo htmlspecialchars($member['project2_contribution'], ENT_QUOTES, 'UTF-8'); ?>
+                Shared responsibility: CSS File, About Page and overall awesomeness<br>
+    Individual responsibility: <?php echo htmlspecialchars($member['project1_contribution'], ENT_QUOTES, 'UTF-8'); ?><br>
+    Individual responsibility: <?php echo htmlspecialchars($member['project2_contribution'], ENT_QUOTES, 'UTF-8'); ?><br>
             </dd>
         <?php endforeach; ?>
     </dl>
