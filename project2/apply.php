@@ -218,4 +218,4 @@ function escape_html($value) {
     </form>
 </main>
 
-<?php require_once 'includes/footer.inc'; ?>
+<?php include 'includes/footer.inc'; ?>

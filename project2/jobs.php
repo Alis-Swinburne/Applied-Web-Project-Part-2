@@ -23,7 +23,7 @@ $sql = "CREATE TABLE IF NOT EXISTS `Jobs` (
 )"; 
 
 if (!mysqli_query($conn, $sql)) {
-    error_log("User table setup failed: ". mysqli_error($conn));
+    error_log("Job table setup failed: ". mysqli_error($conn));
     die("Database setup failed: ". mysqli_error($conn));
 }
 

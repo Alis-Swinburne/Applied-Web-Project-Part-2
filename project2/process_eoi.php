@@ -23,7 +23,7 @@ include 'includes/header.inc';
 include 'includes/navigation.inc';
 
 // Create table if it does not exist
-$query = "CREATE TABLE IF NOT EXISTS `eoi` (
+$create_table = "CREATE TABLE IF NOT EXISTS `eoi` (
             `eoi_number` int(11) NOT NULL AUTO_INCREMENT,
             `job_ref` char(6) NOT NULL,
             `first_name` varchar(20) NOT NULL,
@@ -43,7 +43,10 @@ $query = "CREATE TABLE IF NOT EXISTS `eoi` (
             FOREIGN KEY (`job_ref`) REFERENCES `Jobs`(`Job_Code`) ON UPDATE CASCADE
             )";
 
-$result = mysqli_query($conn, $query);
+if (!mysqli_query($conn, $create_table)) {
+    error_log("EOI table setup failed: " . mysqli_error($conn));
+    die("Database setup failed: " . mysqli_error($conn));
+}
 
 // Clean and collect inputs
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
