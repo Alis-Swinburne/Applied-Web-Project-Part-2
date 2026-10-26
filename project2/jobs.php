@@ -3,22 +3,29 @@ $page_title = "Jobs";
 include 'includes/header.inc';
 include 'includes/navigation.inc';
 
-// Database connection details. Copy these from the file that already connects
-// to your database (e.g. settings.php or login.php) if they differ.
-$db_host = "localhost";
-$db_user = "root";
-$db_pass = "";
-$db_name = "finova_db";   
-
-mysqli_report(MYSQLI_REPORT_OFF);  // stops harmless errors (like the setup file's duplicate INSERTs) crashing the page
-$conn = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
+// Database connection details.
+require_once 'settings.php';
+$conn = mysqli_connect($host, $db_user, $pwd, $sql_db);
 if (!$conn) {
-    die("<p>Database connection failed: " . htmlspecialchars(mysqli_connect_error()) . "</p>");
+    die("Unable to connect to database: " . mysqli_connect_error());
 }
+
 mysqli_set_charset($conn, "utf8mb4");
 
-// database_setup.inc must be included AFTER $conn exists (it creates the tables if missing)
-require_once 'includes/database_setup.inc';
+// Create Jobs table if not exist
+$sql = "CREATE TABLE IF NOT EXISTS `Jobs` (
+  `Job_Code` char(6) NOT NULL,
+  `Job_Title` text NOT NULL,
+  `Salary` int(10) NOT NULL,
+  `Description` longtext NOT NULL,
+  `Min_Experience` int(2) DEFAULT NULL,
+  PRIMARY KEY (`Job_Code`)
+)"; 
+
+if (!mysqli_query($conn, $sql)) {
+    error_log("User table setup failed: ". mysqli_error($conn));
+    die("Database setup failed: ". mysqli_error($conn));
+}
 
 $table = "Jobs";   // matches the table created in database_setup.inc
 
@@ -60,7 +67,7 @@ $stmt->close();
 
 <main>
     <section class="intro-section">
-        <h2 style="color: black; text-align:left">Current Career Opportunities</h2> 
+        <h1 style="color: black; text-align:left">Current Career Opportunities</h1> 
         <p>Join the FinTech team &amp; shape the future of digital banking and personal finance technology</p>
         
         <!-- Perks section moved here: inside the intro, above the directory -->
@@ -106,10 +113,19 @@ $stmt->close();
     </section>
 
     <?php if (count($jobs) === 0): ?>
-        <p class="no-results">No positions matched your search. <a href="jobs.php">View all positions</a></p>
+        <?php if ($search !== ''): ?>
+            <p class="no-results">
+                No positions matched your search.
+                <a href="jobs.php">View all positions</a>
+            </p>
+        <?php else: ?>
+            <p class="no-results">
+                No jobs are currently available.
+            </p>
+        <?php endif; ?>
     <?php endif; ?>
 
-    <?php foreach ($jobs as $job): 
+    <?php foreach ($jobs as $job):
         $code = htmlspecialchars($job['Job_Code']);
         // Optional columns; blank if they don't exist
         $reporting   = $job['Reporting_Line'] ?? '';
@@ -171,6 +187,7 @@ $stmt->close();
     <?php endforeach; ?>
 </main>
 
-<?php 
-require_once 'includes/footer.inc'; 
+<?php
+include 'includes/footer.inc';
+mysqli_close($conn);
 ?>
