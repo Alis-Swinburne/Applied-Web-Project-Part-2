@@ -47,8 +47,8 @@ $members = ($members_result) ? mysqli_fetch_all($members_result, MYSQLI_ASSOC) :
     <?php foreach ($members as $member): ?>
         <p>
             <strong><?php echo htmlspecialchars($member['name'], ENT_QUOTES, 'UTF-8'); ?>:</strong>
-            "<?php echo htmlspecialchars($member['quote_original'], ENT_QUOTES, 'UTF-8'); ?>"  
-            <br>English: "<?php echo htmlspecialchars($member['quote_english'], ENT_QUOTES, 'UTF-8'); ?>"
+            <?php echo htmlspecialchars($member['quote_original'], ENT_QUOTES, 'UTF-8'); ?>
+            <br>English: <?php echo htmlspecialchars($member['quote_english'], ENT_QUOTES, 'UTF-8'); ?>
         </p>
     <?php endforeach; ?>
 
