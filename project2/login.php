@@ -4,6 +4,11 @@ $is_invalid = false;
 $signup_success = $_SESSION['signup_success'] ?? null;
 unset($_SESSION['signup_success']);
 
+if (isset($_SESSION['user_id'])) {
+    header("Location: index.php");
+    exit();
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     require_once 'settings.php';
 

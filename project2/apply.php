@@ -16,7 +16,7 @@ if (!$conn) {
 $profile_id = filter_var($_SESSION['user_id'] ?? null, FILTER_VALIDATE_INT);
 $profile = null;
 
-if ($profile_id !== false && $profile_id !== null) {
+if ($profile_id !== false && $profile_id !== null && $profile_id !== 1) {
     $sql = "SELECT * FROM user_profile WHERE id = ?";
     $stmt = mysqli_prepare($conn, $sql);
 
@@ -218,4 +218,4 @@ function escape_html($value) {
     </form>
 </main>
 
-<?php require_once 'includes/footer.inc'; ?>
+<?php include 'includes/footer.inc'; ?>

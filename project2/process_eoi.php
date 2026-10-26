@@ -23,7 +23,7 @@ include 'includes/header.inc';
 include 'includes/navigation.inc';
 
 // Create table if it does not exist
-$query = "CREATE TABLE IF NOT EXISTS `eoi` (
+$create_table = "CREATE TABLE IF NOT EXISTS `eoi` (
             `eoi_number` int(11) NOT NULL AUTO_INCREMENT,
             `job_ref` char(6) NOT NULL,
             `first_name` varchar(20) NOT NULL,
@@ -43,7 +43,10 @@ $query = "CREATE TABLE IF NOT EXISTS `eoi` (
             FOREIGN KEY (`job_ref`) REFERENCES `Jobs`(`Job_Code`) ON UPDATE CASCADE
             )";
 
-$result = mysqli_query($conn, $query);
+if (!mysqli_query($conn, $create_table)) {
+    error_log("EOI table setup failed: " . mysqli_error($conn));
+    die("Database setup failed: " . mysqli_error($conn));
+}
 
 // Clean and collect inputs
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -205,9 +208,11 @@ if (!empty($errors)) {
     echo "<div class='margin'>";
     echo "<h1>We couldn't submit your application</h1>";
     echo "<h2>Please fix the following and try again: </h2>";
+    echo "<ul>";
     foreach ($errors as $error) {
-        echo "<p>- $error</p>";
+        echo "<li>$error</li>";
         }
+    echo "</ul>";
     echo "<div class='button-container'>";
     echo "<a href='apply.php' class='back-button'>Back to Apply</a>";
     echo "</div>";

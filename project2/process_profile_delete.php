@@ -55,4 +55,3 @@ if (!mysqli_stmt_execute($stmt)) {
 }
 
 header('Location: logout.php');
-?>
