@@ -85,4 +85,4 @@ $members_result = mysqli_query($conn, $members_sql);
     </table>
 </main>
 
-<?php require_once 'includes/footer.inc'; ?>
+</php { require_once 'includes/footer.inc'; }
