@@ -1,11 +1,10 @@
-PHP
 <?php
 $page_title = "About";
 include 'includes/header.inc';
 include 'includes/navigation.inc';
 
 // --- GET GROUP INFO ---
-$group_sql = "SELECT group_name, tutorial_class, photo_path, photo_caption FROM about_group ORDER BY id ASC LIMIT 1";
+$group_sql = "SELECT group_name, tutorial_class, photo_path, photo_caption FROM about_group LIMIT 1";
 $group_result = mysqli_query($conn, $group_sql);
 $group = ($group_result && mysqli_num_rows($group_result) > 0) ? mysqli_fetch_assoc($group_result) : null;
 
