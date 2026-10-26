@@ -715,15 +715,39 @@ footer {
 /* about.php Section */
 /* About page only styling, e.g. the group photo */
 #about-table {
-    border: 1;
+    width: 60%;
+    border: 1px solid black;
     border-collapse: collapse;
     margin: auto;
-    background-color: #FCE3E8; 
+    background-color: var(--light-green-background); 
+}
+
+#about-table th,
+#about-table td {
+    border: 1px solid black;
+    padding: 5px;
 }
     
 #about-table caption {
     font-weight: bold;
     color: black;
+}
+
+.student-number:hover {
+    transform: scale(1.1);
+    color:  var(--green-dark);
+}
+
+.contributions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.contribution {
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--green);
+    margin-bottom: 8px;
 }
 
 
@@ -1015,6 +1039,11 @@ footer {
     }
     .authentication-popup {
         padding: 1.5rem;
+    }
+
+    /* About page contributions */
+     .contributions {
+        grid-template-columns: 1fr;
     }
 }
 /* manage.php Section */
