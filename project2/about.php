@@ -9,7 +9,7 @@ $group_result = mysqli_query($conn, $group_sql);
 $group = ($group_result && mysqli_num_rows($group_result) > 0) ? mysqli_fetch_assoc($group_result) : null;
 
 // --- GET MEMBER INFO ---
-$members_sql = "SELECT student_number, name, project1_contribution, quote_original, quote_english, fun_fact FROM about_members ORDER BY student_number ASC";
+$members_sql = "SELECT student_number, name, project1_contribution, project2_contribution, quote_original, quote_english, fun_fact FROM about_members ORDER BY student_number ASC";
 $members_result = mysqli_query($conn, $members_sql);
 $members = ($members_result) ? mysqli_fetch_all($members_result, MYSQLI_ASSOC) : [];
 ?>
