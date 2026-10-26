@@ -67,7 +67,7 @@ $stmt->close();
 
 <main>
     <section class="intro-section">
-        <h2 style="color: black; text-align:left">Current Career Opportunities</h2> 
+        <h1 style="color: black; text-align:left">Current Career Opportunities</h1> 
         <p>Join the Finova team &amp; shape the future of digital banking and personal finance technology</p>
         
         <!-- Perks section moved here: inside the intro, above the directory -->

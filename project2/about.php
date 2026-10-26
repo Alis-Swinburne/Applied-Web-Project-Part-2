@@ -15,7 +15,7 @@ $members = ($members_result) ? mysqli_fetch_all($members_result, MYSQLI_ASSOC) :
 ?>
 
 <main>
-    <h2 style="color:darkblue">About Our Team</h2>
+    <h1>About Our Team</h1>
        
     <h3>Group Information</h3>
     <ul>
