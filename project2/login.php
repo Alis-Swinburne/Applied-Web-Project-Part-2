@@ -100,7 +100,7 @@ include 'includes/navigation.inc';
 
             <div class="form-field">
                 <label for="password">Password</label>
-                <input type="password" id="passsword" name="password" required>
+                <input type="password" id="password" name="password" required>
             </div>
 
             <button class="authentication-button" type="submit">Login</button>

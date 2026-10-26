@@ -920,139 +920,6 @@ img.group_photo {
     box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px;
 }
 
-
-/* Media */
-/* For mobile or similar size width tabs */
-
-/* removes animations when motion is reduced, specifically the infinite shimmer since it was an accessibility issue */
-@media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-        animation: none !important; /* makes it higher priority */
-        transition: none !important;
-    }
-}
-
-@media (max-width: 768px) {
-    #menu-toggle {
-        display: block; /* should stop keyboard from targeting it */
-        position: absolute;
-        opacity: 0;
-        width: 1px;
-        height: 1px;
-        margin: 0;
-    }
-    #menu-toggle:focus-visible + .hamburger {
-        outline: 3px solid var(--green);
-        outline-offset: 3px;
-    }
-
-    .hamburger {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        font-size: 2rem;
-        margin-right: 20px;
-        
-        border-radius: 30px;
-        padding: 0.5rem 1rem;
-        transition: all 0.25s ease;
-    }
-    .hamburger-text {
-        font-size: 1rem;
-        font-weight: bold;
-        margin-left: 0.5rem;
-    }
-    .hamburger:hover {
-        transform: scale(1.1);
-        color: white;
-        text-decoration: underline;
-
-        background-color: var(--green);
-    }
-
-    .main-nav, .nav-links {
-        z-index: 101;
-    }
-
-    .nav-links {
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        visibility: hidden;
-
-        top: 100%;
-        left: 0;
-        width: 100%;
-        box-sizing: border-box;
-
-        margin: 0;
-        padding: 1rem 0;
-        background-color: white;
-        text-align: center;
-
-        /* This is for a cool slide down animation!! */
-        max-height: 0; /* starting height */
-        overflow: hidden; /* prevents the links from being visible outside the navigation box while it is animating */
-        opacity: 0;
-        transform: translateY(-10px);
-
-        pointer-events: none; /* stops links from being clicked on while the hamburger is closed/closing */
-
-        transition: max-height 0.4s ease, opacity 0.3s ease, transform 0.3s ease, visibility 0s linear 0.4s;
-    }
-
-    /* Shows the navigation links when the hamburger menu is opened */
-    #menu-toggle:checked ~ .nav-links {
-        max-height: 800px;
-        padding: 1rem 0;
-        opacity: 1;
-        visibility: visible;
-        transition-delay: 0s;
-        transform: translateY(0);
-        pointer-events: auto;
-    }
-
-    #description-section, #customer-satisfaction-section, #inclusivity-section {
-        display: grid;
-        background-attachment: scroll;
-    }
-
-     /* Job form fields */
-     .form-row, .form-row-three {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
-
-    #job-form, #profile-form {
-        padding: 1rem;
-    }
-
-    #job-form fieldset {
-        margin: 1rem 0;
-    }
-    #profile-form fieldset {
-        margin: 2rem 0;
-    }
-
-    .jobs-layout {
-        grid-template-columns: 1fr; /* fix aside content stacking on phones */
-    }
-
-
-    /* login.php and signup.php */
-    .authentication-main {
-        padding: 2rem 1rem;
-    }
-    .authentication-popup {
-        padding: 1.5rem;
-    }
-
-    /* About page contributions */
-     .contributions {
-        grid-template-columns: 1fr;
-    }
-}
 /* manage.php Section */
 /* HR manager page only styling, e.g. search cards, results table, status badges. Everything is scoped to .manage-page so it can't affect other pages. */
 
@@ -1382,6 +1249,140 @@ img.group_photo {
 
 @media (max-width: 900px) {
     .manage-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Media */
+/* For mobile or similar size width tabs */
+
+/* removes animations when motion is reduced, specifically the infinite shimmer since it was an accessibility issue */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation: none !important; /* makes it higher priority */
+        transition: none !important;
+    }
+}
+@media (max-width: 1200px) {
+    #menu-toggle {
+        display: block; /* should stop keyboard from targeting it */
+        position: absolute;
+        opacity: 0;
+        width: 1px;
+        height: 1px;
+        margin: 0;
+    }
+    #menu-toggle:focus-visible + .hamburger {
+        outline: 3px solid var(--green);
+        outline-offset: 3px;
+    }
+
+    .hamburger {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 2rem;
+        margin-right: 20px;
+        
+        border-radius: 30px;
+        padding: 0.5rem 1rem;
+        transition: all 0.25s ease;
+    }
+    .hamburger-text {
+        font-size: 1rem;
+        font-weight: bold;
+        margin-left: 0.5rem;
+    }
+    .hamburger:hover {
+        transform: scale(1.1);
+        color: white;
+        text-decoration: underline;
+
+        background-color: var(--green);
+    }
+
+    .main-nav, .nav-links {
+        z-index: 101;
+    }
+
+    .nav-links {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        visibility: hidden;
+
+        top: 100%;
+        left: 0;
+        width: 100%;
+        box-sizing: border-box;
+
+        margin: 0;
+        padding: 1rem 0;
+        background-color: white;
+        text-align: center;
+
+        /* This is for a cool slide down animation!! */
+        max-height: 0; /* starting height */
+        overflow: hidden; /* prevents the links from being visible outside the navigation box while it is animating */
+        opacity: 0;
+        transform: translateY(-10px);
+
+        pointer-events: none; /* stops links from being clicked on while the hamburger is closed/closing */
+
+        transition: max-height 0.4s ease, opacity 0.3s ease, transform 0.3s ease, visibility 0s linear 0.4s;
+    }
+
+    /* Shows the navigation links when the hamburger menu is opened */
+    #menu-toggle:checked ~ .nav-links {
+        max-height: 800px;
+        padding: 1rem 0;
+        opacity: 1;
+        visibility: visible;
+        transition-delay: 0s;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    #description-section, #customer-satisfaction-section, #inclusivity-section {
+        display: grid;
+        background-attachment: scroll;
+    }
+
+     /* Job form fields */
+     .form-row, .form-row-three {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    #job-form, #profile-form {
+        padding: 1rem;
+    }
+
+    #job-form fieldset {
+        margin: 1rem 0;
+    }
+    #profile-form fieldset {
+        margin: 2rem 0;
+    }
+
+    .jobs-layout {
+        grid-template-columns: 1fr; /* fix aside content stacking on phones */
+    }
+
+
+    /* login.php and signup.php */
+    .authentication-main {
+        padding: 2rem 1rem;
+    }
+    .authentication-popup {
+        padding: 1.5rem;
+    }
+
+    /* About page contributions */
+     .contributions {
         grid-template-columns: 1fr;
     }
 }
