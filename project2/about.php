@@ -1,6 +1,6 @@
+PHP
 <?php
 $page_title = "About";
-require_once 'includes/db.inc.php'; // Ensure database connection ($conn) is loaded
 include 'includes/header.inc';
 include 'includes/navigation.inc';
 
@@ -17,7 +17,7 @@ $members = ($members_result) ? mysqli_fetch_all($members_result, MYSQLI_ASSOC) :
 
 <main>
     <h2 style="color:darkblue">About Our Team</h2>
-        
+       
     <h3>Group Information</h3>
     <ul>
         <li>Group Name: <?php echo htmlspecialchars($group['group_name'] ?? 'N/A', ENT_QUOTES, 'UTF-8'); ?>
@@ -26,7 +26,7 @@ $members = ($members_result) ? mysqli_fetch_all($members_result, MYSQLI_ASSOC) :
             </ul>
         </li>
     </ul>
-        
+       
     <h3>Member Contributions</h3>
     <dl>
         <?php foreach ($members as $member): ?>
@@ -55,12 +55,12 @@ $members = ($members_result) ? mysqli_fetch_all($members_result, MYSQLI_ASSOC) :
     <?php if (!empty($group['photo_path'])): ?>
     <h3>Group Photo</h3>
     <figure>
-        <img src="<?php echo htmlspecialchars($group['photo_path'], ENT_QUOTES, 'UTF-8'); ?>" 
+        <img src="<?php echo htmlspecialchars($group['photo_path'], ENT_QUOTES, 'UTF-8'); ?>"
              alt="Group Photo" width="600" height="400">
         <figcaption><?php echo htmlspecialchars($group['photo_caption'] ?? '', ENT_QUOTES, 'UTF-8'); ?></figcaption>
     </figure>
     <?php endif; ?>
-        
+       
     <h3>Fun Facts About Our Team</h3>
     <table id="about-table">    
         <caption>Fun Facts About Team Members</caption>
@@ -82,4 +82,3 @@ $members = ($members_result) ? mysqli_fetch_all($members_result, MYSQLI_ASSOC) :
 </main>
 
 <?php require_once 'includes/footer.inc'; ?>
-
