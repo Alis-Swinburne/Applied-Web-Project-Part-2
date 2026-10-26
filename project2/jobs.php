@@ -67,12 +67,12 @@ $stmt->close();
 
 <main>
     <section class="intro-section">
-        <h1 style="color: black; text-align:left">Current Career Opportunities</h1> 
-        <p>Join the FinTech team &amp; shape the future of digital banking and personal finance technology</p>
+        <h2 style="color: black; text-align:left">Current Career Opportunities</h2> 
+        <p>Join the Finova team &amp; shape the future of digital banking and personal finance technology</p>
         
         <!-- Perks section moved here: inside the intro, above the directory -->
         <aside class="perks-sidebar">
-            <h3>Why work at Fintech?</h3>
+            <h3>Why work at Finova?</h3>
             <p>We believe our employees do their best work when they feel supported, challenged and rewarded.</p>
             <ul>
                 <li><strong>Flexible Work:</strong> Hybrid and fully remote work options.</li>
